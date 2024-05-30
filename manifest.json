@@ -1,0 +1,15 @@
+{
+    "name": "TextWandler",
+    "short_name": "TextWandler",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "A crude local editor for transforming text input via JavaScript Code",
+    "icons": [
+        {
+            "src": "images/logo-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}
