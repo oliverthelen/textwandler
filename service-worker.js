@@ -298,7 +298,7 @@ define(['./workbox-74854057'], (function (workbox) { 'use strict';
     "revision": "054a21dc31c06f556232515bb34f6da3"
   }, {
     "url": "manifest.json",
-    "revision": "a8711bb7e7270df01aa6617689132a71"
+    "revision": "4c4ab516de3158105eb77a65500dc121"
   }, {
     "url": "node_modules_monaco-editor_esm_vs_basic-languages_apex_apex_js.bundle.js",
     "revision": "807aee10bd70fd3ef7e2224f257c7d6c"
