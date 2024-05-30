@@ -1,0 +1,192 @@
+/* Add a black background color to the top navigation */
+.menu-bar {
+    background-color: #333;
+    overflow: hidden;
+    height: 45px;
+    border-bottom: 3px solid black;
+    display: flex;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+}
+
+.menu-bar-right {
+    display: flex;
+    flex-grow: 1;
+    align-items: stretch;
+}
+
+.menu-bar-right-item {
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+/* Style the links inside the navigation bar */
+.menu-bar-item {
+    cursor: pointer;
+    display: flex;
+    color: white;
+    transition-duration: 0.4s;
+
+    width: 3em;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.menu-bar-item:after {
+    content: '';
+    background: #9cd6ff;
+    display: block;
+    position: absolute;
+    padding-top: 3em;
+    padding-left: 3em;
+    margin-left: 0em !important;
+    margin-top: 0em;
+    opacity: 0;
+    transition: all 0.25s;
+}
+
+.menu-bar-item:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s;
+}
+
+/* Change the color of links on hover */
+.menu-bar-item:hover {
+    background-color: #007fd4;
+    color: black;
+}
+
+iframe#webpack-dev-server-client-overlay {
+    display: none !important;
+}
+
+html {
+    padding: 0;
+    font-family: 'Courier New', monospace;
+    background-color: #1e1e1e;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #1e1e1e;
+}
+
+#editor-container {
+    position: absolute;
+    top: 48px;
+    left: 0px;
+    right: 0px;
+    height: calc(100vh - 48px);
+}
+
+#code-editor {
+    overflow: auto;
+    height: calc(50% - 2px);
+    width: 100%;
+}
+
+#bottom-editor {
+    height: calc(50% - 2px);
+    width: 100%;
+}
+
+#diff-editor {
+    height: 100%;
+    width: 100%;
+}
+
+.resizer[data-direction='vertical'] {
+    background-color: #454545;
+    cursor: ns-resize;
+    height: 4px;
+    width: 100%;
+}
+
+.resizer[data-direction='vertical']:hover {
+    background-color: #007fd4;
+}
+
+#welcome-screen {
+    display: none;
+    background-color: #1e1e1e;
+    height: 100%;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+}
+
+#settings-screen {
+    display: none;
+    background-color: #1e1e1e;
+    height: 100%;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+}
+
+#error-output {
+    display: none;
+    position: relative;
+    background-color: #1e1e1e;
+    height: 100%;
+    color: #f48771;
+    padding: 10px;
+    font-size: 14px;
+}
+
+#error-output-close {
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid white;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+}
+
+#loading-screen {
+    display: none !important;
+}
+
+input[type='button'] {
+    background-color: #333;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+input[type='button']:hover {
+    background-color: #007fd4; /* Green */
+    color: white;
+}
+
+.license-box {
+
+    max-height: 800px;
+    white-space:pre-line;
+    overflow-y: scroll;
+}
+
+.license-entry-title {
+    color: deepskyblue;
+}
+
+a {
+    color: deepskyblue;
+}

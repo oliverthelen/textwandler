@@ -1,0 +1,51 @@
+{
+    "name": "text-wandler",
+    "version": "1.0.0",
+    "description": "A crude local editor for transforming text input via JavaScript code",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "webpack serve --open --watch",
+        "start": "webpack serve --mode development --open",
+        "build": "webpack",
+        "format": "prettier . --check",
+        "format:fix": "prettier . --write",
+        "export": "webpack --mode production && touch dist/.nojekyll",
+        "deploy": "gh-pages -d dist -t true"
+    },
+    "keywords": [
+        "text manipulation",
+        "text conversion",
+        "javascript text manipulation",
+        "js text manipulation"
+    ],
+    "author": "Oliver Thelen",
+    "license": "UNLICENSED",
+    "homepage": "https://github.com/oliverthelen/textwandler",
+    "dependencies": {
+        "lodash": "4.17.21",
+        "lucide": "0.376.1",
+        "monaco-editor": "0.48.0",
+        "monaco-editor-webpack-plugin": "7.1.0"
+    },
+    "devDependencies": {
+        "@types/lodash": "4.17.4",
+        "copy-webpack-plugin": "12.0.2",
+        "css-loader": "7.1.1",
+        "favicons": "7.2.0",
+        "favicons-webpack-plugin": "6.0.1",
+        "gh-pages": "^6.1.1",
+        "html-webpack-plugin": "5.6.0",
+        "nodemon": "3.1.0",
+        "prettier": "3.2.5",
+        "style-loader": "4.0.0",
+        "terser-webpack-plugin": "5.3.10",
+        "ts-loader": "9.5.1",
+        "ts-node": "10.9.2",
+        "typescript": "5.4.5",
+        "webpack": "5.91.0",
+        "webpack-cli": "5.1.4",
+        "webpack-dev-server": "5.0.4",
+        "workbox-webpack-plugin": "^7.1.0"
+    }
+}

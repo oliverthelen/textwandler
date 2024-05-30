@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+    <head>
+        <title>TextWandler</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="manifest" href="manifest.json" />
+    </head>
+    <body>
+        <div
+            id="loading-screen"
+            style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #1e1e1e;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            "
+        >
+            <img src="assets/android-chrome-96x96.png" />
+        </div>
+        <div class="menu-bar topnav">
+            <div class="menu-bar-item" id="button-run" alt="Run"></div>
+            <div class="menu-bar-item" id="button-reset"></div>
+            <div class="menu-bar-item" id="button-clipboard"></div>
+            <div class="menu-bar-item" id="button-settings"></div>
+            <div class="menu-bar-right"></div>
+            <div class="menu-bar-right-item" id="menu-bar-info"></div>
+        </div>
+        <div id="editor-container">
+            <div id="code-editor" class="resizable-top"></div>
+            <div class="resizer" data-direction="vertical"></div>
+            <div id="bottom-editor" class="resizable-bottom">
+                <div id="diff-editor"></div>
+                <div id="error-output">
+                    <div id="error-output-content"></div>
+                    <div id="error-output-close">X</div>
+                </div>
+            </div>
+        </div>
+        <div id="welcome-screen">Welcome</div>
+        <div id="settings-screen">
+            <h2>Settings</h2>
+            <input
+                type="button"
+                class="button"
+                id="settings-reset"
+                value="Reset"
+            />
+            <input type="button" id="settings-return" value="Return" />
+
+            <h2>About</h2>
+            Version 1.0.0 <br />
+            Developed by Oliver Thelen
+
+            <h2>Dependencies</h2>
+            <div class="license-box">
+                <h3><a class="license-entry-title" href="https://lodash.com/" target="_blank">lodash</a></h3>
+
+                The MIT License
+
+                Copyright JS Foundation and other contributors https://js.foundation/
+
+                Based on Underscore.js, copyright Jeremy Ashkenas,
+                DocumentCloud and Investigative Reporters & Editors http://underscorejs.org/
+
+                This software consists of voluntary contributions made by many
+                individuals. For exact contribution history, see the revision history
+                available at https://github.com/lodash/lodash
+
+                The following license applies to all parts of this software except as
+                documented below:
+
+                ====
+
+                Permission is hereby granted, free of charge, to any person obtaining
+                a copy of this software and associated documentation files (the
+                "Software"), to deal in the Software without restriction, including
+                without limitation the rights to use, copy, modify, merge, publish,
+                distribute, sublicense, and/or sell copies of the Software, and to
+                permit persons to whom the Software is furnished to do so, subject to
+                the following conditions:
+
+                The above copyright notice and this permission notice shall be
+                included in all copies or substantial portions of the Software.
+
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+                EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+                MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+                NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+                LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+                OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+                WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+                ====
+
+                Copyright and related rights for sample code are waived via CC0. Sample
+                code is defined as all source code displayed within the prose of the
+                documentation.
+
+                CC0: http://creativecommons.org/publicdomain/zero/1.0/
+
+                ====
+
+                Files located in the node_modules and vendor directories are externally
+                maintained libraries used by this software which have their own
+                licenses; we recommend you read them, as their terms may differ from the
+                terms above.
+
+                <h3><a class="license-entry-title" href="https://lucide.dev/" target="_blank">Lucide</a></h3>
+
+                Lucide License
+                ISC License
+
+                Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022.
+
+                Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+                THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+                <h3><a class="license-entry-title" href="https://microsoft.github.io/monaco-editor/" target="_blank">Monaco Editor / Monaco Editor Webpack Loader Plugin</a></h3>
+
+                The MIT License (MIT)
+
+                Copyright (c) 2016 - present Microsoft Corporation
+
+                Permission is hereby granted, free of charge, to any person obtaining a copy
+                of this software and associated documentation files (the "Software"), to deal
+                in the Software without restriction, including without limitation the rights
+                to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                copies of the Software, and to permit persons to whom the Software is
+                furnished to do so, subject to the following conditions:
+
+                The above copyright notice and this permission notice shall be included in all
+                copies or substantial portions of the Software.
+
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                SOFTWARE.
+
+                <h3><a class="license-entry-title" href="https://stackoverflow.com/a/73392263" target="_blank">Resizing HTML Elements - (red cloud)</a></h3>
+
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt" target="_blank">License text</a>
+            </div>
+        </div>
+    </body>
+</html>
