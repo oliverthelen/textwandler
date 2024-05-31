@@ -24,19 +24,24 @@
             ></div>
             <div
                 class="menu-bar-item"
-                onclick="switchOutputEditor()"
-                id="button-switch-output-editor"
+                onclick="showSettingsScreen()"
+                id="button-settings"
             ></div>
             <div class="menu-bar-right"></div>
             <div class="menu-bar-right-item" id="menu-bar-info"></div>
         </div>
-        <div class="editor-container">
+        <div id="editor-container">
             <div id="code-editor" class="resizable-top"></div>
             <div class="resizer" data-direction="vertical"></div>
             <div id="bottom-editor" class="resizable-bottom">
                 <div id="diff-editor"></div>
                 <div id="error-output"></div>
             </div>
+        </div>
+        <div id="welcome-screen">Welcome</div>
+        <div id="settings-screen">
+            Settings <br />
+            <input type="button" value="Reset" onclick="resetCodeEditor()" />
         </div>
     </body>
 </html>
