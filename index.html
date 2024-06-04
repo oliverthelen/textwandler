@@ -52,13 +52,17 @@
             <div class="resizer" data-direction="vertical"></div>
             <div id="bottom-editor" class="resizable-bottom">
                 <div id="diff-editor"></div>
-                <div id="error-output"></div>
+                <div id="error-output">
+                    <div id="error-output-content"></div>
+                    <div id="error-output-close" onclick="showEditor()">X</div>
+                </div>
             </div>
         </div>
         <div id="welcome-screen">Welcome</div>
         <div id="settings-screen">
             Settings <br />
             <input type="button" value="Reset" onclick="resetCodeEditor()" />
+            <input type="button" value="Return" onclick="showEditor()" />
         </div>
     </body>
 </html>
