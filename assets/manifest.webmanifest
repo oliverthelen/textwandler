@@ -1,7 +1,7 @@
 {
   "name": "text-wandler",
   "short_name": "text-wandler",
-  "description": "",
+  "description": "A crude local editor for transforming text input via JavaScript code",
   "dir": "auto",
   "lang": "en-US",
   "display": "standalone",

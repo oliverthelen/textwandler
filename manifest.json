@@ -5,7 +5,7 @@
     "display": "standalone",
     "theme_color": "#000000",
     "background_color": "#ffffff",
-    "description": "A crude local editor for transforming text input via JavaScript Code",
+    "description": "A crude local editor for transforming text input via JavaScript code",
     "icons": [
         {
             "src": "assets/android-chrome-192x192.png",
