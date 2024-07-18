@@ -27,4 +27,4 @@ export const INITIAL_EDITOR_CONTENT = `// Welcome to this crude JavaScript text 
 //// Transform all lines via a callback  
 transformLine((lineContent, lineNumber) => lineContent + lineNumber);`;
 
-export const INITIAL_INPUT_CONTENT = 'a\nb\nc'
+export const INITIAL_INPUT_CONTENT = 'a\nb\nc';

@@ -81,6 +81,32 @@ body {
     background-color: #1e1e1e;
 }
 
+#select-editor-state-wrapper {
+    padding-left: 15px;
+}
+
+#select-editor-state {
+    min-width: 150px;
+    background-color: #1e1e1e;
+    border: 1px solid #252526;
+    border-radius: 3px;
+    color: #fff;
+    padding: 5px;
+}
+
+#editor-state-name-wrapper {
+    padding-left: 15px;
+}
+
+#editor-state-name {
+    min-width: 150px;
+    background-color: #1e1e1e;
+    border: 1px solid #252526;
+    border-radius: 3px;
+    padding: 6px;
+    color: #fff;
+}
+
 #editor-container {
     position: absolute;
     top: 48px;
@@ -177,9 +203,8 @@ input[type='button']:hover {
 }
 
 .license-box {
-
     max-height: 800px;
-    white-space:pre-line;
+    white-space: pre-line;
     overflow-y: scroll;
 }
 

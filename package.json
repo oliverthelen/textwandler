@@ -1,6 +1,6 @@
 {
     "name": "text-wandler",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A crude local editor for transforming text input via JavaScript code",
     "main": "index.js",
     "scripts": {
@@ -46,6 +46,6 @@
         "webpack": "5.91.0",
         "webpack-cli": "5.1.4",
         "webpack-dev-server": "5.0.4",
-        "workbox-webpack-plugin": "^7.1.0"
+        "workbox-webpack-plugin": "7.1.0"
     }
 }
