@@ -17,6 +17,7 @@ import {
     Trash
 } from 'lucide';
 import { StateManager } from './state-manager';
+import { WandlerPipeline } from './wandler-pipeline/pipeline';
 
 enum OUTPUT_EDITOR_MODE {
     EDITOR,
@@ -176,12 +177,6 @@ export class TextWandler {
         document.getElementById('editor-container').style.display = 'none';
     }
 
-    private async loadEditorStateById(event: Event) {
-        const stateId: string = (event.target as HTMLSelectElement).value;
-        const state = await TextWandler.stateManager.getEditorState(stateId);
-        await this.loadEditorState(state);
-    }
-
     // STATE
 
     private async setEditorStateName(event: Event) {
@@ -223,6 +218,12 @@ export class TextWandler {
         ) as HTMLInputElement;
         stateName.value = this.state.name;
         await this.updateStateSelect();
+    }
+
+    private async loadEditorStateById(event: Event) {
+        const stateId: string = (event.target as HTMLSelectElement).value;
+        const state = await TextWandler.stateManager.getEditorState(stateId);
+        await this.loadEditorState(state);
     }
 
     private async updateStateSelect() {
@@ -305,76 +306,19 @@ export class TextWandler {
         document.getElementById('error-output').style.display = 'none';
         document.getElementById('diff-editor').style.display = 'block';
 
+        const pipeline = new WandlerPipeline();
+
         try {
             this.evalInScope(this.codeEditor.getValue(), {
                 _,
-                getValue: () => this.diffEditor.getOriginalModel().getValue(),
-                getJSON: () =>
-                    JSON.parse(this.diffEditor.getOriginalModel().getValue()),
-                setValue: (text: string) => {
-                    this.diffEditor
-                        .getModifiedModel()
-                        .setValue(text.toString());
-                },
-                setJSON: (text: JSON) => {
-                    this.diffEditor
-                        .getModifiedModel()
-                        .setValue(JSON.stringify(text, null, 4));
-                },
-                getLine: (lineNumber: number) => {
-                    return this.diffEditor.getLineContent(lineNumber);
-                },
-                filterLine: (
-                    lineFilter: (line: string, lineNumber: number) => boolean
-                ): void => {
-                    const originalModel = this.diffEditor.getOriginalModel();
-                    const modifiedModel = this.diffEditor.getModifiedModel();
-
-                    modifiedModel.setValue(originalModel.getValue());
-
-                    for (let i = 1; i <= originalModel.getLineCount(); i++) {
-                        modifiedModel.applyEdits([
-                            {
-                                range: new monaco.Range(
-                                    i,
-                                    1,
-                                    i,
-                                    originalModel.getLineContent(i).length + 1
-                                ),
-                                text: lineFilter(
-                                    originalModel.getLineContent(i),
-                                    i
-                                )
-                                    ? originalModel.getLineContent(i)
-                                    : null
-                            }
-                        ]);
-                    }
-                },
-                transformLine: (
-                    lineMapper: (line: string, lineNumber: number) => string
-                ) => {
-                    const originalModel = this.diffEditor.getOriginalModel();
-                    const modifiedModel = this.diffEditor.getModifiedModel();
-
-                    modifiedModel.setValue(originalModel.getValue());
-
-                    const edits = [];
-
-                    for (let i = 1; i <= originalModel.getLineCount(); i++) {
-                        edits.push({
-                            range: new monaco.Range(
-                                i,
-                                1,
-                                i,
-                                originalModel.getLineContent(i).length + 1
-                            ),
-                            text: lineMapper(originalModel.getLineContent(i), i)
-                        });
-                    }
-                    modifiedModel.applyEdits(edits);
-                }
+                ...pipeline.getActionsForContext()
             });
+
+            this.diffEditor
+                .getModifiedModel()
+                .setValue(
+                    pipeline.run(this.diffEditor.originalModel.getValue())
+                );
 
             document.getElementById('menu-bar-info').innerHTML =
                 `Length: ${this.diffEditor.getOriginalModel().getLineCount()}/${this.diffEditor.getModifiedModel().getLineCount()}`;
