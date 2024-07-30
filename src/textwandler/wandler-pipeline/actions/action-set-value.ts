@@ -10,7 +10,7 @@ export class ActionSetValue extends Action {
 
     run(input: ActionResult): ActionResult {
         input.text = this.transformFunction(input.text);
-        if(typeof input.text === 'string') return input;
+        if (typeof input.text === 'string') return input;
         input.text = JSON.stringify(input.text, null, 2);
         return input;
     }

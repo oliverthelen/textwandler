@@ -4,9 +4,7 @@ import {
     INITIAL_INPUT_CONTENT
 } from '../editor/initial-editor-content';
 import { DiffEditor } from '../editor/diff-editor';
-import { setupResizeHandler } from '../helper/resize-handler';
 import * as _ from 'lodash';
-import * as monaco from 'monaco-editor';
 import {
     ClipboardCopy,
     createElement,
@@ -73,7 +71,6 @@ export class TextWandler {
 
     private setupUI() {
         this.setupMenuBar();
-        setupResizeHandler();
 
         document
             .querySelector('#button-clipboard')
