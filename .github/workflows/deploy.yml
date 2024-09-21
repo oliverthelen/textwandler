@@ -19,6 +19,7 @@ jobs:
 
             - name: Cancel Workflow If Chore commit
               id: check_message
+              continue-on-error: true
               run: |
                 if [[ "${{ github.event.head_commit.message }}" == chore* ]]; then
                   echo "Commit message starts with 'chore'. Exiting."
@@ -28,7 +29,6 @@ jobs:
             - name: Skip remaining steps if commit message starts with 'chore'
               if: steps.check_message.outputs.exit_code == 1
               run: echo "Skipping remaining steps."
-              continue-on-error: true
 
             - name: Use Node.js 20.x
               if: steps.check_message.outputs.exit_code == 0
