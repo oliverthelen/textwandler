@@ -25,23 +25,23 @@ jobs:
 
 
             - name: Skip remaining steps if commit message starts with 'chore'
-              if: steps.check_message.outputs.exit_code == 1
+              if: failure()
               run: echo "Skipping remaining steps."
 
             - name: Use Node.js 20.x
-              if: steps.check_message.outputs.exit_code == 0
+              if: success()
               uses: actions/setup-node@v3
               with:
                   node-version: 20.x
 
             - name: Install dependencies
-              if: steps.check_message.outputs.exit_code == 0
+              if: success()
               run: |
                   npm ci    
                   npm run export
 
             - name: Deploy
-              if: steps.check_message.outputs.exit_code == 0
+              if: success()
               env:
                   GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: |
@@ -49,7 +49,7 @@ jobs:
                   npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
 
             - name: Semantic Release
-              if: steps.check_message.outputs.exit_code == 0
+              if: success()
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
