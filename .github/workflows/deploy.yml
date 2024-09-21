@@ -15,7 +15,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
               with:
-                token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.BOT_TOKEN }}
 
             - name: Use Node.js 20.x
               uses: actions/setup-node@v3
@@ -27,13 +27,13 @@ jobs:
                   npm run export
             - name: Deploy
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: |
-                  git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+                  git remote set-url origin https://git:${BOT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
                   npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
 
             - name: Semantic Release
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: npx semantic-release
