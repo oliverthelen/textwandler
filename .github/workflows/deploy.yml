@@ -18,20 +18,32 @@ jobs:
                   token: ${{ secrets.BOT_TOKEN }}
 
             - name: Cancel Workflow If Chore commit
-              if: "startsWith(github.event.head_commit.message, 'chore')"
-              run: exit 1
+              id: check_message
+              run: |
+                if [[ "${{ github.event.head_commit.message }}" == chore* ]]; then
+                  echo "Commit message starts with 'chore'. Exiting."
+                  exit 0
+                fi
+
+            - name: Skip remaining steps if commit message starts with 'chore'
+              if: steps.check_message.outputs.exit_code == 0
+              run: echo "Skipping remaining steps."
+              continue-on-error: true
 
             - name: Use Node.js 20.x
+              if: steps.check_message.outputs.exit_code != 0
               uses: actions/setup-node@v3
               with:
                   node-version: 20.x
 
             - name: Install dependencies
+              if: steps.check_message.outputs.exit_code != 0
               run: |
                   npm ci    
                   npm run export
 
             - name: Deploy
+              if: steps.check_message.outputs.exit_code != 0
               env:
                   GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: |
@@ -39,6 +51,7 @@ jobs:
                   npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
 
             - name: Semantic Release
+              if: steps.check_message.outputs.exit_code != 0
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
