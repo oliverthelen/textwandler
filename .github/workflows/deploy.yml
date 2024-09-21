@@ -27,6 +27,14 @@ jobs:
               with:
                   node-version: 20.x
 
+            - name: Get next version
+              id: next_version
+              run: echo "NEXT_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | awk '{print $NF}')" >> $GITHUB_ENV
+
+            - name: Update package.json with next version
+              run: |
+                sed -i 's/"version": "[^"]*"/"version": "'${{ env.NEXT_VERSION }}'"/' package.json
+
             - name: Install dependencies
               if: "!startsWith(github.event.head_commit.message, 'chore')"
               run: |
@@ -44,6 +52,6 @@ jobs:
             - name: Semantic Release
               if: "!startsWith(github.event.head_commit.message, 'chore')"
               env:
-                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-                  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+                NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: npx semantic-release

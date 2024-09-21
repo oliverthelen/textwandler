@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -5,6 +6,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const path = require('path');
+const packageJson = require('./package.json');
 
 module.exports = (env, argv) => ({
     entry: './src/index.ts',
@@ -57,6 +59,9 @@ module.exports = (env, argv) => ({
             : {})
     },
     plugins: [
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(packageJson.version)
+        }),
         new MonacoWebpackPlugin({
             languages: ['javascript', 'typescript']
         }),

@@ -16,6 +16,7 @@ import {
 } from 'lucide';
 import { StateManager } from './state-manager';
 import { WandlerPipeline } from './wandler-pipeline/pipeline';
+import {APP_VERSION} from "../helper/globals";
 
 enum OUTPUT_EDITOR_MODE {
     EDITOR,
@@ -113,6 +114,10 @@ export class TextWandler {
         document
             .querySelector('#select-editor-state')
             .addEventListener('change', this.loadEditorStateById.bind(this));
+
+        document
+            .querySelector('#APP_VERSION')
+            .textContent = APP_VERSION;
     }
 
     private setupMenuBar() {
