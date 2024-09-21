@@ -29,7 +29,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: |
-                  git remote set-url origin https://git:${BOT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+                  git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
                   npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
 
             - name: Semantic Release
