@@ -34,6 +34,9 @@ jobs:
             - name: Get next version
               if: "!startsWith(github.event.head_commit.message, 'chore')"
               id: next_version
+              env:
+                NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: echo "NEXT_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | awk '{print $NF}')" >> $GITHUB_ENV
 
             - name: Update package.json with next version
