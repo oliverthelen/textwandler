@@ -21,8 +21,6 @@ jobs:
               id: check_message
               if: "startsWith(github.event.head_commit.message, 'chore')"
               run: exit 1
-              continue-on-error: true
-
 
             - name: Skip remaining steps if commit message starts with 'chore'
               if: failure()
