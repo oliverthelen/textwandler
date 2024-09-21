@@ -1,6 +1,6 @@
 {
     "name": "text-wandler",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "A crude local editor for transforming text input via JavaScript code",
     "main": "index.js",
     "scripts": {
