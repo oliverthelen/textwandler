@@ -4,7 +4,7 @@
     "description": "A crude local editor for transforming text input via JavaScript code",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest",
         "watch": "webpack serve --open --watch",
         "start": "webpack serve --mode development --open",
         "build": "webpack",
