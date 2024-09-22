@@ -9,6 +9,10 @@ jobs:
         runs-on: ubuntu-latest
         environment: github-pages
         steps:
+            - name: Skip remaining steps if commit message starts with 'chore'
+              if: "startsWith(github.event.head_commit.message, 'chore')"
+              run: echo "Skipping remaining steps."
+
             - name: Cancel Previous Runs
               uses: styfle/cancel-workflow-action@0.9.1
 
@@ -16,10 +20,6 @@ jobs:
               uses: actions/checkout@v4
               with:
                   token: ${{ secrets.BOT_TOKEN }}
-
-            - name: Skip remaining steps if commit message starts with 'chore'
-              if: "startsWith(github.event.head_commit.message, 'chore')"
-              run: echo "Skipping remaining steps."
 
             - name: Use Node.js 20.x
               if: "!startsWith(github.event.head_commit.message, 'chore')"
