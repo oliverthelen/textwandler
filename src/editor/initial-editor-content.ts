@@ -9,7 +9,19 @@ export const INITIAL_EDITOR_CONTENT = `// Welcome to this crude JavaScript text 
 //// Filter all lines via a callback  
 // filterLine((lineContent, lineNumber) => lineNumber % 2 === 0);
 
+//// Reduce lines
+/*
+reduce((result, line) => {
+    if(parseInt(line)) {
+        result += parseInt(line);
+    }
+
+    return result;
+}, 0);
+*/
+
 //// Transform all lines via a callback  
-transformLine((lineContent, lineNumber) => lineContent + lineNumber);`;
+transformLine((lineContent, lineNumber) => lineContent + lineNumber);
+`;
 
 export const INITIAL_INPUT_CONTENT = 'a\nb\nc';

@@ -2,6 +2,7 @@ import { Action, ActionResult } from './actions/action';
 import { ActionTransformLine } from './actions/action-transform-line';
 import { ActionFilterLine } from './actions/action-filter-line';
 import { ActionSetValue } from './actions/action-set-value';
+import { ActionReduce } from './actions/action-reduce';
 
 export class WandlerPipeline {
     private actions: Action[] = [];
@@ -37,6 +38,17 @@ export class WandlerPipeline {
                 lineMapper: (line: string, lineNumber: number) => boolean
             ) => {
                 this.addAction(new ActionFilterLine(lineMapper));
+            },
+            reduce: (
+                reduceFunction: (
+                    result: string,
+                    currentLine: string,
+                    currentIndex: number,
+                    inputArray: string[]
+                ) => any,
+                initialValue: any
+            ) => {
+                this.addAction(new ActionReduce(reduceFunction, initialValue));
             },
             setValue: (transformFunction: (input: string) => string) => {
                 this.addAction(new ActionSetValue(transformFunction));
