@@ -1,6 +1,8 @@
 import { Action, ActionResult } from './action';
 
 export class ActionJsonFormat extends Action {
+    public readonly name: string = 'JsonFormat';
+
     private readonly transformFunction: (input: string) => string;
 
     constructor(transformFunction: (input: string) => string) {

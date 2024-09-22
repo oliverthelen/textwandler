@@ -1,6 +1,8 @@
 import { Action, ActionResult } from './action';
 
 export class ActionSetValue extends Action {
+    public readonly name: string = 'SetValue';
+
     private readonly transformFunction: (input: string) => string;
 
     constructor(transformFunction: (input: string) => string) {

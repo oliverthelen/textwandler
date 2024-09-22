@@ -1,6 +1,8 @@
 import { Action, ActionResult } from './action';
 
 export class ActionFilterLine extends Action {
+    public readonly name: string = 'FilterLine';
+
     private readonly transformFunction: (
         input: string,
         lineNumber: number

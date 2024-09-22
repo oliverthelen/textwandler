@@ -5,5 +5,7 @@ export interface ActionResult {
 }
 
 export abstract class Action {
+    public readonly name: string;
+
     abstract run(input: ActionResult): ActionResult;
 }

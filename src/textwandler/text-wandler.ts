@@ -16,9 +16,10 @@ import {
     Trash
 } from 'lucide';
 import { StateManager } from './state-manager';
-import { WandlerPipeline } from './wandler-pipeline/pipeline';
+import { ActionRunStep, WandlerPipeline } from './wandler-pipeline/pipeline';
 import { APP_VERSION } from '../helper/globals';
 import { SideBySideEditor } from '../editor/side-by-side-editor';
+import { kebabCase } from 'lodash';
 
 enum OUTPUT_EDITOR_MODE {
     SIDE_BY_SIDE_EDITOR,
@@ -351,6 +352,45 @@ export class TextWandler {
         ).call(contextAsScope);
     }
 
+    private drawActionRunSteps(actionRunSteps: ActionRunStep[]) {
+        const stepsParent = document.getElementById('code-editor-steps');
+        stepsParent.innerHTML = '';
+
+        actionRunSteps.forEach((actionRunStep, index, actions) => {
+            const newStep = document.createElement('div');
+            newStep.className = 'code-editor-step'; // step-transform-line
+            if (actionRunStep.resultType === 'error') {
+                newStep.className += ` step-result-error`;
+            } else {
+                newStep.className += ` step-${kebabCase(actionRunStep.action.name)}`;
+            }
+
+            const newStepTitleWrapper = document.createElement('span');
+            newStepTitleWrapper.className = 'code-editor-step-title';
+
+            const newStepTitle = document.createElement('span');
+            newStepTitle.innerHTML = `${actionRunStep.action.name}`;
+
+            const newStepDuration = document.createElement('span');
+            newStepDuration.innerHTML = `${Math.ceil(actionRunStep.duration)}ms`;
+            newStepDuration.className = 'code-editor-step-duration';
+
+            newStepTitleWrapper.appendChild(newStepTitle);
+            newStepTitleWrapper.appendChild(document.createElement('br'));
+            newStepTitleWrapper.appendChild(newStepDuration);
+
+            newStep.appendChild(newStepTitleWrapper);
+            stepsParent.appendChild(newStep);
+
+            if (index < actions.length - 1) {
+                const nextStepArrow = document.createElement('div');
+                nextStepArrow.className = 'code-editor-step-arrow';
+                nextStepArrow.innerHTML = '→';
+                stepsParent.appendChild(nextStepArrow);
+            }
+        });
+    }
+
     public async runFunction() {
         this.state.savedAt = new Date();
         this.state.codeEditorContent = this.codeEditor.getValue();
@@ -382,7 +422,10 @@ export class TextWandler {
             this.textEditor
                 .getModifiedModel()
                 .setValue(
-                    pipeline.run(this.textEditor.originalModel.getValue())
+                    pipeline.run(
+                        this.textEditor.originalModel.getValue(),
+                        this.drawActionRunSteps
+                    )
                 );
 
             document.getElementById('menu-bar-info').innerHTML =

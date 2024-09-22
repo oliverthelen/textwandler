@@ -115,10 +115,75 @@ body {
     height: calc(100vh - 48px);
 }
 
-#code-editor {
+#code-editor-wrapper {
     overflow: auto;
     height: calc(50% - 2px);
     width: 100%;
+}
+
+#code-editor {
+    float: left;
+    width: calc(100% - 200px);
+    height: 100%;
+}
+
+#code-editor-steps {
+    float: left;
+    height: calc(100% - 20px);
+    width: 176px;
+    border-left: 4px #454545 solid;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+.code-editor-step {
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    background-color: #252525;
+    border: 2px #454545 solid;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.code-editor-step-duration {
+    font-size: 12px;
+}
+
+.code-editor-step-arrow {
+    color: white;
+    font-size: 24px;
+    transform: rotate(90deg) translate(72px, 0px);
+}
+
+.step-result-error {
+    background-color: #d72222;
+    border-color: darkred;
+}
+
+.step-transform-line {
+    border-color: #f48771;
+}
+
+.step-filter-line {
+    border-color: #f4cf71;
+}
+
+.step-set-value {
+    border-color: #a571f4;
+}
+
+.step-reduce {
+    border-color: #719af4;
+}
+
+.step-json-format {
+    border-color: #92f471;
+}
+
+.code-editor-step-title {
+    font-size: 16px;
+    margin-top: 4px;
 }
 
 #bottom-editor {

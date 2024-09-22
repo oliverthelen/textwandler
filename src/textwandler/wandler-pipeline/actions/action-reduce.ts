@@ -1,6 +1,8 @@
 import { Action, ActionResult } from './action';
 
 export class ActionReduce extends Action {
+    public readonly name: string = 'Reduce';
+
     private readonly reduceFunction: (
         result: any,
         currentLine: string,
