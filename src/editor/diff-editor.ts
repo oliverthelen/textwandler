@@ -9,13 +9,19 @@ export class DiffEditor extends Editor {
     modifiedModel: ITextModel;
     diffEditor: IDiffEditor;
 
-    constructor(initialText?: string, documentElementId?: string) {
+    constructor(
+        initialText?: string,
+        documentElementId?: string,
+        initialModifiedText?: string
+    ) {
         super();
 
         if (!initialText || !documentElementId) return;
 
         this.originalModel = monaco.editor.createModel(initialText);
-        this.modifiedModel = monaco.editor.createModel(initialText);
+        this.modifiedModel = monaco.editor.createModel(
+            initialModifiedText ?? initialText
+        );
         this.diffEditor = monaco.editor.createDiffEditor(
             document.getElementById(documentElementId),
             {
@@ -24,6 +30,8 @@ export class DiffEditor extends Editor {
                 originalEditable: true
             }
         );
+
+        document.getElementById(documentElementId).style.display = 'block';
 
         this.diffEditor.setModel({
             original: this.originalModel,
@@ -53,5 +61,11 @@ export class DiffEditor extends Editor {
             .setValue(
                 this.diffEditor.getOriginalEditor().getModel().getValue()
             );
+    }
+
+    dispose() {
+        this.diffEditor.dispose();
+        this.originalModel.dispose();
+        this.modifiedModel.dispose();
     }
 }

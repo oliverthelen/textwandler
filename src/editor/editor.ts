@@ -8,7 +8,11 @@ export class Editor {
     modifiedModel: ITextModel;
     standAloneEditor: IStandaloneCodeEditor;
 
-    constructor(initialText?: string, documentElementId?: string) {
+    constructor(
+        initialText?: string,
+        documentElementId?: string,
+        initialModifiedText?: string
+    ) {
         if (!initialText || !documentElementId) return;
 
         this.originalModel = monaco.editor.createModel(
@@ -16,7 +20,7 @@ export class Editor {
             'javascript'
         );
         this.modifiedModel = monaco.editor.createModel(
-            initialText,
+            initialModifiedText ?? initialText,
             'javascript'
         );
         this.standAloneEditor = monaco.editor.create(
@@ -64,5 +68,11 @@ export class Editor {
     reset(): void {
         // runFunctionUsed = false;
         this.standAloneEditor.setValue(this.originalModel.getValue());
+    }
+
+    dispose(): void {
+        this.standAloneEditor.dispose();
+        this.originalModel.dispose();
+        this.modifiedModel.dispose();
     }
 }

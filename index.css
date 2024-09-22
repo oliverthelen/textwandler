@@ -126,9 +126,55 @@ body {
     width: 100%;
 }
 
+#side-by-side-editor {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#left-editor-wrapper {
+    float: left;
+    height: 100%;
+    width: calc(50% - 2px);
+}
+
+#left-editor {
+    width: 100%;
+    height: 100%;
+}
+
+#side-by-side-editor-resizer {
+    float: left;
+    z-index: 1001;
+}
+
+#right-editor-wrapper {
+    float: left;
+    height: 100%;
+    width: calc(50% - 2px);
+}
+
+#right-editor {
+    width: 100%;
+    height: 100%;
+}
+
 #diff-editor {
+    display: none;
     height: 100%;
     width: 100%;
+}
+
+.resizer[data-direction='horizontal'] {
+    background-color: #454545;
+    cursor: ew-resize;
+    height: 100%;
+    width: 4px;
+}
+
+.resizer[data-direction='horizontal']:hover {
+    background-color: #007fd4;
 }
 
 .resizer[data-direction='vertical'] {

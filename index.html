@@ -25,21 +25,55 @@
             <img src="assets/android-chrome-96x96.png" />
         </div>
         <div class="menu-bar topnav">
-            <div class="menu-bar-item" id="button-run" alt="Run"></div>
-            <div class="menu-bar-item" id="button-reset"></div>
-            <div class="menu-bar-item" id="button-clipboard"></div>
-            <div class="menu-bar-item" id="button-settings"></div>
+            <div
+                class="menu-bar-item"
+                id="button-run"
+                title="Run code on input"
+            ></div>
+            <div
+                class="menu-bar-item"
+                id="button-reset"
+                title="Reset output"
+            ></div>
+            <div
+                class="menu-bar-item"
+                id="button-clipboard"
+                title="Copy output to clipboard"
+            ></div>
+            <div
+                class="menu-bar-item"
+                id="button-switch-editor-mode"
+                title="Switch editor mode (normal/diff)"
+            ></div>
+            <div
+                class="menu-bar-item"
+                id="button-settings"
+                title="Open settings"
+            ></div>
             <div id="select-editor-state-wrapper">
                 <select
                     name="select-editor-state"
                     id="select-editor-state"
+                    title="Switch between saved editor states"
                 ></select>
             </div>
             <div id="editor-state-name-wrapper">
-                <input type="text" id="editor-state-name" />
+                <input
+                    type="text"
+                    id="editor-state-name"
+                    title="New name for the editor state"
+                />
             </div>
-            <div class="menu-bar-item" id="button-new-editor-state"></div>
-            <div class="menu-bar-item" id="button-delete-editor-state"></div>
+            <div
+                class="menu-bar-item"
+                id="button-new-editor-state"
+                title="Create a new editor state"
+            ></div>
+            <div
+                class="menu-bar-item"
+                id="button-delete-editor-state"
+                title="Delete the current editor state"
+            ></div>
             <div class="menu-bar-right"></div>
             <div class="menu-bar-right-item" id="menu-bar-info"></div>
         </div>
@@ -47,6 +81,19 @@
             <div id="code-editor" class="resizable-top"></div>
             <div class="resizer" data-direction="vertical"></div>
             <div id="bottom-editor" class="resizable-bottom">
+                <div id="side-by-side-editor">
+                    <div id="left-editor-wrapper">
+                        <div id="left-editor"></div>
+                    </div>
+                    <div
+                        id="side-by-side-editor-resizer"
+                        class="resizer"
+                        data-direction="horizontal"
+                    ></div>
+                    <div id="right-editor-wrapper">
+                        <div id="right-editor"></div>
+                    </div>
+                </div>
                 <div id="diff-editor"></div>
                 <div id="error-output">
                     <div id="error-output-content"></div>

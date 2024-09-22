@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import {
     ClipboardCopy,
     createElement,
+    Diff,
     Play,
     Plus,
     RotateCcw,
@@ -16,10 +17,11 @@ import {
 } from 'lucide';
 import { StateManager } from './state-manager';
 import { WandlerPipeline } from './wandler-pipeline/pipeline';
-import {APP_VERSION} from "../helper/globals";
+import { APP_VERSION } from '../helper/globals';
+import { SideBySideEditor } from '../editor/side-by-side-editor';
 
 enum OUTPUT_EDITOR_MODE {
-    EDITOR,
+    SIDE_BY_SIDE_EDITOR,
     DIFF_EDITOR
 }
 
@@ -27,10 +29,10 @@ export class TextWandler {
     private static instance: TextWandler;
     private static stateManager: StateManager;
 
-    outputEditorMode = OUTPUT_EDITOR_MODE.DIFF_EDITOR;
+    outputEditorMode = OUTPUT_EDITOR_MODE.SIDE_BY_SIDE_EDITOR;
 
     private codeEditor: Editor;
-    private diffEditor: Editor | DiffEditor;
+    private textEditor: SideBySideEditor | DiffEditor;
 
     private state: EditorState;
 
@@ -38,7 +40,17 @@ export class TextWandler {
         this.setupUI();
 
         this.codeEditor = new Editor(INITIAL_EDITOR_CONTENT, 'code-editor');
-        this.diffEditor = new DiffEditor(INITIAL_INPUT_CONTENT, 'diff-editor');
+        if (this.outputEditorMode === OUTPUT_EDITOR_MODE.SIDE_BY_SIDE_EDITOR) {
+            this.textEditor = new SideBySideEditor(
+                INITIAL_INPUT_CONTENT,
+                'side-by-side-editor'
+            );
+        } else {
+            this.textEditor = new DiffEditor(
+                INITIAL_INPUT_CONTENT,
+                'diff-editor'
+            );
+        }
 
         this.handleOldEditorState().then(async () => {
             let state = await TextWandler.stateManager.getLatestEditorState();
@@ -76,6 +88,9 @@ export class TextWandler {
         document
             .querySelector('#button-clipboard')
             .addEventListener('click', () => this.copyOutputToClipBoard());
+        document
+            .querySelector('#button-switch-editor-mode')
+            .addEventListener('click', () => this.switchEditorMode());
         document
             .querySelector('#button-run')
             .addEventListener('click', () => this.runFunction());
@@ -115,9 +130,7 @@ export class TextWandler {
             .querySelector('#select-editor-state')
             .addEventListener('change', this.loadEditorStateById.bind(this));
 
-        document
-            .querySelector('#APP_VERSION')
-            .textContent = APP_VERSION;
+        document.querySelector('#APP_VERSION').textContent = APP_VERSION;
     }
 
     private setupMenuBar() {
@@ -137,6 +150,13 @@ export class TextWandler {
         document
             .getElementById('button-clipboard')
             .appendChild(clipboardCopyIcon);
+
+        const diffIcon = createElement(Diff);
+        diffIcon.setAttribute('stroke', '#FFF');
+        diffIcon.setAttribute('height', '18px');
+        document
+            .getElementById('button-switch-editor-mode')
+            .appendChild(diffIcon);
 
         const circleHelp = createElement(Settings);
         circleHelp.setAttribute('stroke', '#FFF');
@@ -164,8 +184,13 @@ export class TextWandler {
         document.getElementById('settings-screen').style.display = 'none';
         document.getElementById('welcome-screen').style.display = 'none';
         document.getElementById('error-output').style.display = 'none';
-        document.getElementById('diff-editor').style.display = 'block';
         document.getElementById('editor-container').style.display = 'block';
+        if (this.outputEditorMode === OUTPUT_EDITOR_MODE.DIFF_EDITOR) {
+            document.getElementById('diff-editor').style.display = 'block';
+        } else {
+            document.getElementById('side-by-side-editor').style.display =
+                'block';
+        }
     }
 
     private showSettingsScreen() {
@@ -213,7 +238,7 @@ export class TextWandler {
     private async loadEditorState(state: EditorState) {
         this.state = state;
         this.codeEditor.setValue(state.codeEditorContent);
-        this.diffEditor.getOriginalModel().setValue(state.diffEditorContent);
+        this.textEditor.getOriginalModel().setValue(state.diffEditorContent);
 
         const stateName: HTMLInputElement = document.getElementById(
             'editor-state-name'
@@ -266,10 +291,43 @@ export class TextWandler {
     public copyOutputToClipBoard() {
         try {
             navigator.clipboard.writeText(
-                this.diffEditor.modifiedModel.getValue()
+                this.textEditor.modifiedModel.getValue()
             );
         } catch (error) {
             console.error(error.message);
+        }
+    }
+
+    // SWITCH EDITOR MODE
+
+    public switchEditorMode() {
+        if (this.outputEditorMode === OUTPUT_EDITOR_MODE.SIDE_BY_SIDE_EDITOR) {
+            this.outputEditorMode = OUTPUT_EDITOR_MODE.DIFF_EDITOR;
+            document.getElementById('side-by-side-editor').style.display =
+                'none';
+            const editorValue = this.textEditor.getOriginalModel().getValue();
+            const editorModifiedValue = this.textEditor
+                .getModifiedModel()
+                .getValue();
+            this.textEditor.dispose();
+            this.textEditor = new DiffEditor(
+                editorValue,
+                'diff-editor',
+                editorModifiedValue
+            );
+        } else {
+            this.outputEditorMode = OUTPUT_EDITOR_MODE.SIDE_BY_SIDE_EDITOR;
+            document.getElementById('diff-editor').style.display = 'none';
+            const editorValue = this.textEditor.getOriginalModel().getValue();
+            const editorModifiedValue = this.textEditor
+                .getModifiedModel()
+                .getValue();
+            this.textEditor.dispose();
+            this.textEditor = new SideBySideEditor(
+                editorValue,
+                'side-by-side-editor',
+                editorModifiedValue
+            );
         }
     }
 
@@ -278,11 +336,11 @@ export class TextWandler {
     public resetCodeEditor() {
         localStorage.removeItem('editor-last-state');
         this.codeEditor.setValue(INITIAL_EDITOR_CONTENT);
-        this.diffEditor.originalModel.setValue(INITIAL_INPUT_CONTENT);
+        this.textEditor.originalModel.setValue(INITIAL_INPUT_CONTENT);
     }
 
     public resetTextEditor() {
-        this.diffEditor.reset();
+        this.textEditor.reset();
     }
 
     // EXECUTING USER INPUT
@@ -296,7 +354,7 @@ export class TextWandler {
     public async runFunction() {
         this.state.savedAt = new Date();
         this.state.codeEditorContent = this.codeEditor.getValue();
-        this.state.diffEditorContent = this.diffEditor
+        this.state.diffEditorContent = this.textEditor
             .getOriginalModel()
             .getValue();
 
@@ -306,7 +364,12 @@ export class TextWandler {
         document.getElementById('settings-screen').style.display = 'none';
         document.getElementById('welcome-screen').style.display = 'none';
         document.getElementById('error-output').style.display = 'none';
-        document.getElementById('diff-editor').style.display = 'block';
+        if (this.outputEditorMode === OUTPUT_EDITOR_MODE.DIFF_EDITOR) {
+            document.getElementById('diff-editor').style.display = 'block';
+        } else {
+            document.getElementById('side-by-side-editor').style.display =
+                'block';
+        }
 
         const pipeline = new WandlerPipeline();
 
@@ -316,19 +379,24 @@ export class TextWandler {
                 ...pipeline.getActionsForContext()
             });
 
-            this.diffEditor
+            this.textEditor
                 .getModifiedModel()
                 .setValue(
-                    pipeline.run(this.diffEditor.originalModel.getValue())
+                    pipeline.run(this.textEditor.originalModel.getValue())
                 );
 
             document.getElementById('menu-bar-info').innerHTML =
-                `Length: ${this.diffEditor.getOriginalModel().getLineCount()}/${this.diffEditor.getModifiedModel().getLineCount()}`;
+                `Length: ${this.textEditor.getOriginalModel().getLineCount()}/${this.textEditor.getModifiedModel().getLineCount()}`;
         } catch (e) {
             document.getElementById('error-output-content').innerHTML =
                 `Error: ${e}`;
             document.getElementById('error-output').style.display = 'block';
-            document.getElementById('diff-editor').style.display = 'none';
+            if (this.outputEditorMode === OUTPUT_EDITOR_MODE.DIFF_EDITOR) {
+                document.getElementById('diff-editor').style.display = 'none';
+            } else {
+                document.getElementById('side-by-side-editor').style.display =
+                    'none';
+            }
         }
     }
 }
