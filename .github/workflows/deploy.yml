@@ -14,9 +14,11 @@ jobs:
               run: echo "Skipping remaining steps."
 
             - name: Cancel Previous Runs
+              if: "!startsWith(github.event.head_commit.message, 'chore')"
               uses: styfle/cancel-workflow-action@0.9.1
 
             - name: Checkout code
+              if: "!startsWith(github.event.head_commit.message, 'chore')"
               uses: actions/checkout@v4
               with:
                   token: ${{ secrets.BOT_TOKEN }}
