@@ -27,7 +27,7 @@
     },
     "dependencies": {
         "lodash": "4.17.21",
-        "lucide": "0.445.0",
+        "lucide": "0.447.0",
         "monaco-editor": "0.52.0",
         "monaco-editor-webpack-plugin": "7.1.0"
     },
