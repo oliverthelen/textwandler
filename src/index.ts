@@ -9,5 +9,10 @@ import { APP_WEBPACK_MODE } from './helper/globals';
         setupServiceWorker();
     }
     await TextWandler.getInstance();
+
+
+                console.log('TEST');
+
+    
     setupResizeHandler();
 })();
