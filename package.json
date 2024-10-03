@@ -5,8 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "jest",
-        "watch": "webpack serve --open --watch",
-        "start": "webpack serve --mode development --open",
+        "watch": "NODE_ENV=development webpack serve --open --watch",
+        "start": "NODE_ENV=development webpack serve --mode development --open",
         "build": "webpack",
         "format": "prettier . --check",
         "format:fix": "prettier . --write",

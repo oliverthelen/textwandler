@@ -326,3 +326,40 @@ input[type='button']:hover {
 a {
     color: deepskyblue;
 }
+
+/**
+ SCROLLBAR LOOK
+ **/
+
+::-webkit-scrollbar {
+    width: 13px;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+::-webkit-scrollbar-track {
+    display: none;
+}
+
+::-webkit-scrollbar-track:hover {
+    background: #646464b3;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #79797966;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #646464b3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#code-editor-steps::-webkit-scrollbar-thumb {
+    background: #64646400;
+}
+
+#code-editor-steps:hover::-webkit-scrollbar-thumb {
+    background: #646464b3;
+}

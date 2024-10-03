@@ -2,9 +2,12 @@ import '../index.css';
 import { TextWandler } from './textwandler/text-wandler';
 import { setupServiceWorker } from './helper/service-worker';
 import { setupResizeHandler } from './helper/resize-handler';
+import { APP_WEBPACK_MODE } from './helper/globals';
 
 (async () => {
-    setupServiceWorker();
-    const textWandler = await TextWandler.getInstance();
+    if (APP_WEBPACK_MODE === 'production') {
+        setupServiceWorker();
+    }
+    await TextWandler.getInstance();
     setupResizeHandler();
 })();

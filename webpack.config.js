@@ -60,7 +60,8 @@ module.exports = (env, argv) => ({
     },
     plugins: [
         new webpack.DefinePlugin({
-            VERSION: JSON.stringify(packageJson.version)
+            VERSION: JSON.stringify(packageJson.version),
+            WEBPACK_MODE: JSON.stringify(argv.mode ?? 'production')
         }),
         new MonacoWebpackPlugin({
             languages: ['javascript', 'typescript']
