@@ -3,6 +3,8 @@ import { ActionTransformLine } from '../../../src/textwandler/wandler-pipeline/a
 import { ActionSetValue } from '../../../src/textwandler/wandler-pipeline/actions/action-set-value';
 import { ActionFilterLine } from '../../../src/textwandler/wandler-pipeline/actions/action-filter-line';
 import { ActionReduce } from '../../../src/textwandler/wandler-pipeline/actions/action-reduce';
+import { ActionJsonStringify } from '../../../src/textwandler/wandler-pipeline/actions/action-json-stringify';
+import { ActionJsonParse } from '../../../src/textwandler/wandler-pipeline/actions/action-json-parse';
 
 describe('Test of WandlerPipeline', () => {
     it('should execute actions', () => {
@@ -62,5 +64,121 @@ describe('Test of WandlerPipeline', () => {
             'a\n' + 'b\n' + '1\n' + 'c\n' + '1\n' + '2\n' + 'x\n' + 'y\n' + 'z'
         );
         expect(result).toEqual('4');
+    });
+
+    it('should execute jsonStringify action', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionJsonStringify(4));
+
+        expect(
+            pipeline.run(
+                '{\n' +
+                    '   "string":"Hello, World!",\n' +
+                    '   "number":42,\n' +
+                    '   "float":3.14,\n' +
+                    '   "boolean":true,\n' +
+                    '   "null":null,\n' +
+                    '   "object":{\n' +
+                    '      "key":"value",\n' +
+                    '      "nestedObject":{\n' +
+                    '         "nestedKey":"nestedValue"\n' +
+                    '      }\n' +
+                    '   },\n' +
+                    '   "array":[\n' +
+                    '      1,\n' +
+                    '      "two",\n' +
+                    '      false,\n' +
+                    '      null,\n' +
+                    '      {\n' +
+                    '         "key":"value"\n' +
+                    '      }\n' +
+                    '   ]\n' +
+                    '}'
+            )
+        ).toEqual(
+            '{\n' +
+                '    "string": "Hello, World!",\n' +
+                '    "number": 42,\n' +
+                '    "float": 3.14,\n' +
+                '    "boolean": true,\n' +
+                '    "null": null,\n' +
+                '    "object": {\n' +
+                '        "key": "value",\n' +
+                '        "nestedObject": {\n' +
+                '            "nestedKey": "nestedValue"\n' +
+                '        }\n' +
+                '    },\n' +
+                '    "array": [\n' +
+                '        1,\n' +
+                '        "two",\n' +
+                '        false,\n' +
+                '        null,\n' +
+                '        {\n' +
+                '            "key": "value"\n' +
+                '        }\n' +
+                '    ]\n' +
+                '}'
+        );
+    });
+
+    it('should execute jsonParse action', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(
+            new ActionJsonParse((json) => {
+                (json.number as number)++;
+                return json;
+            })
+        );
+        pipeline.addAction(new ActionJsonStringify(4));
+
+        expect(
+            pipeline.run(
+                '{\n' +
+                    '   "string":"Hello, World!",\n' +
+                    '   "number":42,\n' +
+                    '   "float":3.14,\n' +
+                    '   "boolean":true,\n' +
+                    '   "null":null,\n' +
+                    '   "object":{\n' +
+                    '      "key":"value",\n' +
+                    '      "nestedObject":{\n' +
+                    '         "nestedKey":"nestedValue"\n' +
+                    '      }\n' +
+                    '   },\n' +
+                    '   "array":[\n' +
+                    '      1,\n' +
+                    '      "two",\n' +
+                    '      false,\n' +
+                    '      null,\n' +
+                    '      {\n' +
+                    '         "key":"value"\n' +
+                    '      }\n' +
+                    '   ]\n' +
+                    '}'
+            )
+        ).toEqual(
+            '{\n' +
+                '    "string": "Hello, World!",\n' +
+                '    "number": 43,\n' +
+                '    "float": 3.14,\n' +
+                '    "boolean": true,\n' +
+                '    "null": null,\n' +
+                '    "object": {\n' +
+                '        "key": "value",\n' +
+                '        "nestedObject": {\n' +
+                '            "nestedKey": "nestedValue"\n' +
+                '        }\n' +
+                '    },\n' +
+                '    "array": [\n' +
+                '        1,\n' +
+                '        "two",\n' +
+                '        false,\n' +
+                '        null,\n' +
+                '        {\n' +
+                '            "key": "value"\n' +
+                '        }\n' +
+                '    ]\n' +
+                '}'
+        );
     });
 });

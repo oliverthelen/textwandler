@@ -18,6 +18,34 @@ declare function CallbackFilterLine(
 declare function filterLine(callback: typeof CallbackFilterLine): void;
 
 /**
+ * Callback that will be called with the parsed json from the output of the previous action.
+ * The resulting object will be automatically given to an instance of the JsonStringify action
+ * @param {Record<string, unknown>} json A json object parsed from the output of the previous action
+ * @returns Record<string, unknown>
+ */
+declare function CallbackJsonParse(
+    json: Record<string, unknown>
+): Record<string, unknown>;
+
+/**
+ * Parses the output of the previous action to a json object and gives it to the provided callback
+ * @param {CallbackJsonParse} callback The provided callback will be called with the json object parsed from the output of the previous action
+ * @param {number} [indentation=2] The indentation that is used to stringify the json object
+ * @returns void
+ */
+declare function jsonParse(
+    callback: typeof CallbackJsonParse,
+    indentation?: number
+): void;
+
+/**
+ * Parses the output from the previous action as a json object and stringifies it
+ * @param {number} [indentation=2] The indentation that is used to stringify the json object
+ * @returns void
+ */
+declare function jsonStringify(indentation?: number): void;
+
+/**
  * Callback that will be called with the content of every
  * @param {any} result The result of the previous reduce step
  * @param {string} currentLine The content of the line as a String

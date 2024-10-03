@@ -1,5 +1,7 @@
 export interface ActionResult {
     text: string;
+    lastActionName: string;
+    customPayload?: unknown;
     lines?: string[];
     step: number;
 }

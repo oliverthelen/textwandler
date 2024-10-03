@@ -177,8 +177,12 @@ body {
     border-color: #719af4;
 }
 
-.step-json-format {
+.step-json-stringify {
     border-color: #92f471;
+}
+
+.step-json-parse {
+    border-color: #71f4d5;
 }
 
 .code-editor-step-title {

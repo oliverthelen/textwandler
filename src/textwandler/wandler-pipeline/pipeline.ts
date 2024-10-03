@@ -3,6 +3,8 @@ import { ActionTransformLine } from './actions/action-transform-line';
 import { ActionFilterLine } from './actions/action-filter-line';
 import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
+import { ActionJsonStringify } from './actions/action-json-stringify';
+import { ActionJsonParse } from './actions/action-json-parse';
 
 export type ActionRunStep = {
     action: Action;
@@ -48,6 +50,7 @@ export class WandlerPipeline {
                         ...actionResult,
                         step: actionResult.step + 1
                     });
+                    result.lastActionName = action.name;
                 } catch (e) {
                     actionRunStep.duration =
                         performance.now() - actionStartTime;
@@ -61,7 +64,7 @@ export class WandlerPipeline {
 
                 return result;
             },
-            { text: inputString, step: 0 }
+            { text: inputString, step: 0, lastActionName: 'initial' }
         );
 
         return actionResult.text;
@@ -78,6 +81,17 @@ export class WandlerPipeline {
             ) => {
                 this.addAction(new ActionFilterLine(lineMapper));
             },
+            jsonParse: (
+                transformJsonFunction: (
+                    input: Record<string, unknown>
+                ) => Record<string, unknown>,
+                indentation?: number
+            ) => {
+                this.addAction(new ActionJsonParse(transformJsonFunction));
+                this.addAction(new ActionJsonStringify(indentation));
+            },
+            jsonStringify: (indentation?: number) =>
+                this.addAction(new ActionJsonStringify(indentation)),
             reduce: (
                 reduceFunction: (
                     result: string,

@@ -26,6 +26,7 @@
         "@oliverthelen:registry": "https://npm.pkg.github.com"
     },
     "dependencies": {
+        "json5": "2.2.3",
         "lodash": "4.17.21",
         "lucide": "0.447.0",
         "monaco-editor": "0.52.0",
