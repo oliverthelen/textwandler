@@ -5,8 +5,39 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const fs = require('fs');
 const path = require('path');
 const packageJson = require('./package.json');
+
+const actionFunctions = fs.readFileSync(
+    path.resolve(__dirname, './src/monaco-extra-libs/action-functions.d.ts'),
+    'utf8'
+);
+const lodash = [
+    'index',
+    'common',
+    'array',
+    'collection',
+    'date',
+    'function',
+    'lang',
+    'math',
+    'number',
+    'object',
+    'seq',
+    'string',
+    'util'
+].reduce((result, key) => {
+    const fileContent = fs.readFileSync(
+        path.resolve(
+            __dirname,
+            `./node_modules/@types/lodash/${key === 'index' ? '' : 'common/'}${key}.d.ts`
+        ),
+        'utf8'
+    );
+    result[key] = fileContent;
+    return result;
+}, {});
 
 module.exports = (env, argv) => ({
     entry: './src/index.ts',
@@ -61,7 +92,9 @@ module.exports = (env, argv) => ({
     plugins: [
         new webpack.DefinePlugin({
             VERSION: JSON.stringify(packageJson.version),
-            WEBPACK_MODE: JSON.stringify(argv.mode ?? 'production')
+            WEBPACK_MODE: JSON.stringify(argv.mode ?? 'production'),
+            ACTION_FUNCTIONS: JSON.stringify(actionFunctions),
+            LODASH: JSON.stringify(lodash)
         }),
         new MonacoWebpackPlugin({
             languages: ['javascript', 'typescript']

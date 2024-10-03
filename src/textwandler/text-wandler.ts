@@ -1,3 +1,4 @@
+import * as monaco from 'monaco-editor';
 import { Editor } from '../editor/editor';
 import {
     INITIAL_EDITOR_CONTENT,
@@ -17,7 +18,11 @@ import {
 } from 'lucide';
 import { StateManager } from './state-manager';
 import { ActionRunStep, WandlerPipeline } from './wandler-pipeline/pipeline';
-import { APP_VERSION } from '../helper/globals';
+import {
+    APP_ACTION_FUNCTIONS,
+    APP_LODASH,
+    APP_VERSION
+} from '../helper/globals';
 import { SideBySideEditor } from '../editor/side-by-side-editor';
 import { kebabCase } from 'lodash';
 
@@ -39,6 +44,7 @@ export class TextWandler {
 
     private constructor() {
         this.setupUI();
+        this.setupMonaco();
 
         this.codeEditor = new Editor(INITIAL_EDITOR_CONTENT, 'code-editor');
         if (this.outputEditorMode === OUTPUT_EDITOR_MODE.SIDE_BY_SIDE_EDITOR) {
@@ -82,6 +88,28 @@ export class TextWandler {
     }
 
     // SETUP
+
+    // Loads the available functions for the user as ExtraLibs into monaco, so it can provide code completion and hints
+    private setupMonaco() {
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(
+            APP_ACTION_FUNCTIONS,
+            `ts:action-functions.d.ts`
+        );
+
+        Object.entries(APP_LODASH).forEach(([key, content]) => {
+            if (key === 'index') {
+                monaco.languages.typescript.javascriptDefaults.addExtraLib(
+                    content,
+                    '@types/lodash/index.d.ts'
+                );
+            } else {
+                monaco.languages.typescript.javascriptDefaults.addExtraLib(
+                    content,
+                    `@types/lodash/common/${key}.d.ts`
+                );
+            }
+        });
+    }
 
     private setupUI() {
         this.setupMenuBar();

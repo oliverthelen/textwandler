@@ -7,7 +7,7 @@ export class ActionReduce extends Action {
         result: any,
         currentLine: string,
         currentIndex: number,
-        inputArray: string[]
+        inputLinesArray: string[]
     ) => any;
     private readonly initialValue: any;
 
@@ -16,13 +16,13 @@ export class ActionReduce extends Action {
             result: any,
             currentLine: string,
             currentIndex: number,
-            inputArray: string[]
+            inputLinesArray: string[]
         ) => any,
-        initialValue: any
+        initialValue?: any
     ) {
         super();
         this.reduceFunction = reduceFunction;
-        this.initialValue = initialValue;
+        this.initialValue = initialValue ?? '';
     }
 
     run(input: ActionResult): ActionResult {
