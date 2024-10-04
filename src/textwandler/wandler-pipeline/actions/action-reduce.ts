@@ -26,11 +26,12 @@ export class ActionReduce extends Action {
     }
 
     run(input: ActionResult): ActionResult {
-        input.text = JSON.stringify(
-            input.text
-                .split(/\n/)
-                .reduce(this.reduceFunction, this.initialValue)
-        );
+        input.text = input.text
+            .split(/\n/)
+            .reduce(this.reduceFunction, this.initialValue);
+
+        if (typeof input.text === 'string') return input;
+        input.text = JSON.stringify(input.text, null, 2);
         return input;
     }
 }
