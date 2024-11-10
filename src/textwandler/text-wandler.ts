@@ -10,6 +10,7 @@ import {
     ClipboardCopy,
     createElement,
     Diff,
+    Github,
     Play,
     Plus,
     RotateCcw,
