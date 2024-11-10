@@ -65,6 +65,10 @@
     color: black;
 }
 
+.menu-bar-logo > img {
+    vertical-align: middle;
+}
+
 iframe#webpack-dev-server-client-overlay {
     display: none !important;
 }
@@ -315,6 +319,21 @@ input[type='button'] {
 input[type='button']:hover {
     background-color: #007fd4; /* Green */
     color: white;
+}
+
+#button-github {
+    margin-right: 12px;
+}
+
+#button-github:hover {
+    cursor: pointer;
+}
+
+#button-github > svg {
+    color: white;
+    fill: white;
+    width: 24px;
+    height: 24px;
 }
 
 .license-box {

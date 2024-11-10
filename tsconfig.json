@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "lib": ["dom", "ES2022"],
+        "skipLibCheck": true,
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,

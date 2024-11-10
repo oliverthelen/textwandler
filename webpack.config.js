@@ -60,6 +60,11 @@ module.exports = (env, argv) => ({
             {
                 test: /\.ttf$/,
                 type: 'asset/resource'
+            },
+            {
+                test: /\.png$/,
+                type: 'asset/resource',
+                include: path.resolve(__dirname, 'assets')
             }
         ]
     },
@@ -100,7 +105,7 @@ module.exports = (env, argv) => ({
             languages: ['javascript', 'typescript']
         }),
         new CopyPlugin({
-            patterns: ['manifest.json']
+            patterns: ['manifest.json', { from: 'src/assets', to: 'assets' }]
         }),
         new FaviconsWebpackPlugin({
             logo: 'images/logo-710.png',

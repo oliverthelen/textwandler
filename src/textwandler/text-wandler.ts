@@ -153,6 +153,9 @@ export class TextWandler {
                 }
             });
         document
+            .querySelector('#button-github')
+            .addEventListener('click', () => this.goToGithub());
+        document
             .querySelector('#editor-state-name')
             .addEventListener('change', this.setEditorStateName.bind(this));
         document
@@ -231,6 +234,12 @@ export class TextWandler {
     private showWelcomeScreen() {
         document.getElementById('welcome-screen').style.display = 'block';
         document.getElementById('editor-container').style.display = 'none';
+    }
+
+    public goToGithub() {
+        window
+            .open('https://github.com/oliverthelen/textwandler', '_blank')
+            .focus();
     }
 
     // STATE
@@ -455,9 +464,6 @@ export class TextWandler {
                         this.drawActionRunSteps
                     )
                 );
-
-            document.getElementById('menu-bar-info').innerHTML =
-                `Length: ${this.textEditor.getOriginalModel().getLineCount()}/${this.textEditor.getModifiedModel().getLineCount()}`;
         } catch (e) {
             document.getElementById('error-output-content').innerHTML =
                 `Error: ${e}`;

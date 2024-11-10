@@ -1,0 +1,21 @@
+{
+    "entryPoints": ["src/monaco-extra-libs/action-functions.d.ts"],
+    "plugin": ["typedoc-plugin-markdown"],
+    "out": "./docs",
+    "exclude": [
+        "**/node_modules/**",
+        "node_modules",
+        "./node_modules",
+        "**/*.test.ts"
+    ],
+    "includeVersion": true,
+    "excludeExternals": true,
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "outputFileStrategy": "modules",
+    "modulesFileName": "documentation",
+    "mergeReadme": false,
+    "disableSources": true,
+    "sort": ["source-order"],
+    "headings": false
+}
