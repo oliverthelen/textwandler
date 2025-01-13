@@ -28,7 +28,7 @@
     "dependencies": {
         "json5": "2.2.3",
         "lodash": "4.17.21",
-        "lucide": "0.468.0",
+        "lucide": "0.471.0",
         "monaco-editor": "0.52.2",
         "monaco-editor-webpack-plugin": "7.1.0"
     },
