@@ -13,6 +13,7 @@ import {
     Play,
     Plus,
     RotateCcw,
+    Save,
     Settings,
     Trash
 } from 'lucide';
@@ -68,11 +69,12 @@ export class TextWandler {
                     name: 'Last State',
                     savedAt: new Date(),
                     codeEditorContent: INITIAL_EDITOR_CONTENT,
-                    diffEditorContent: INITIAL_INPUT_CONTENT
+                    diffEditorContent: INITIAL_INPUT_CONTENT,
+                    unsaved: true
                 };
             }
 
-            this.loadEditorState(state);
+            await this.loadEditorState(state);
         });
     }
 
@@ -142,6 +144,10 @@ export class TextWandler {
             .querySelector('#button-new-editor-state')
             .addEventListener('click', () => this.newEditorState());
         document
+            .querySelector('#button-save-editor-state')
+            .addEventListener('click', () => this.saveEditorState());
+
+        document
             .querySelector('#button-delete-editor-state')
             .addEventListener('click', () => {
                 if (
@@ -195,6 +201,13 @@ export class TextWandler {
         circleHelp.setAttribute('height', '16px');
         document.getElementById('button-settings').appendChild(circleHelp);
 
+        const saveIcon = createElement(Save);
+        saveIcon.setAttribute('stroke', '#FFF');
+        saveIcon.setAttribute('height', '20px');
+        document
+            .getElementById('button-save-editor-state')
+            .appendChild(saveIcon);
+
         const plusIcon = createElement(Plus);
         plusIcon.setAttribute('stroke', '#FFF');
         plusIcon.setAttribute('height', '20px');
@@ -247,21 +260,61 @@ export class TextWandler {
     private async setEditorStateName(event: Event) {
         const name: string = (event.target as HTMLInputElement).value;
         this.state.name = name.trim();
-        await TextWandler.stateManager.upsertEditorState(this.state);
+        await this.saveEditorState(true);
         await this.updateStateSelect();
     }
 
     private async newEditorState() {
+        if (this.state.unsaved) {
+            if (
+                !confirm(
+                    `Do you want to reset the current unsaved editor state and lose your changes ?`
+                )
+            )
+                return;
+        }
+
         const state = {
             id: self.crypto.randomUUID(),
             name: 'New State',
             savedAt: new Date(),
             codeEditorContent: INITIAL_EDITOR_CONTENT,
-            diffEditorContent: INITIAL_INPUT_CONTENT
+            diffEditorContent: INITIAL_INPUT_CONTENT,
+            unsaved: true
         };
 
-        await TextWandler.stateManager.upsertEditorState(state);
         await this.loadEditorState(state);
+    }
+
+    private async saveEditorState(silent = false) {
+        this.state.unsaved = false;
+        this.state.savedAt = new Date();
+        this.state.codeEditorContent = this.codeEditor.getValue();
+        this.state.diffEditorContent = this.textEditor
+            .getOriginalModel()
+            .getValue();
+
+        await TextWandler.stateManager.upsertEditorState(this.state);
+
+        await this.loadEditorState(this.state);
+
+        if (!silent) {
+            const toast = document.getElementById('toast-save');
+            toast.classList.add('show');
+
+            setTimeout(function () {
+                toast.classList.add('hide');
+
+                // Remove the show class after the hide transition is complete
+                toast.addEventListener(
+                    'transitionend',
+                    function () {
+                        toast.classList.remove('show', 'hide');
+                    },
+                    { once: true }
+                );
+            }, 3000);
+        }
     }
 
     private async deleteCurrentEditorState() {
@@ -283,9 +336,39 @@ export class TextWandler {
         ) as HTMLInputElement;
         stateName.value = this.state.name;
         await this.updateStateSelect();
+
+        const editorStateNameElement =
+            document.getElementById('editor-state-name');
+        const selectEditorStateElement = document.getElementById(
+            'select-editor-state'
+        );
+        if (this.state.unsaved) {
+            editorStateNameElement.classList.add('unsaved');
+            selectEditorStateElement.classList.add('unsaved');
+        } else {
+            editorStateNameElement.classList.remove('unsaved');
+            selectEditorStateElement.classList.remove('unsaved');
+        }
     }
 
     private async loadEditorStateById(event: Event) {
+        if (this.state.unsaved) {
+            if (
+                !confirm(
+                    `Your current editor state is unsaved. You will lose your changes by loading another state. Proceed?`
+                )
+            ) {
+                // Reset the selected option in the select element
+                const selectEditorStateElement = document.getElementById(
+                    'select-editor-state'
+                ) as HTMLSelectElement;
+                const states = await TextWandler.stateManager.getEditorStates();
+                selectEditorStateElement.selectedIndex = states.length;
+                // Abort
+                return;
+            }
+        }
+
         const stateId: string = (event.target as HTMLSelectElement).value;
         const state = await TextWandler.stateManager.getEditorState(stateId);
         await this.loadEditorState(state);
@@ -302,8 +385,17 @@ export class TextWandler {
                 if (state.id === this.state.id) selectedIndex = index;
                 return `<option value="${state.id}" selected="${state.id === this.state.id ? 'selected' : ''}">${state.name}</option>`;
             })
+            .concat(
+                this.state.unsaved
+                    ? [
+                          `<option value="unsaved" selected="selected">Unsaved</option>`
+                      ]
+                    : []
+            )
             .join('\n');
-        select.selectedIndex = selectedIndex;
+        select.selectedIndex = this.state.unsaved
+            ? states.length
+            : selectedIndex;
     }
 
     /**
@@ -429,13 +521,7 @@ export class TextWandler {
     }
 
     public async runFunction() {
-        this.state.savedAt = new Date();
-        this.state.codeEditorContent = this.codeEditor.getValue();
-        this.state.diffEditorContent = this.textEditor
-            .getOriginalModel()
-            .getValue();
-
-        await TextWandler.stateManager.upsertEditorState(this.state);
+        if (!this.state.unsaved) await this.saveEditorState(true);
 
         document.getElementById('editor-container').style.display = 'block';
         document.getElementById('settings-screen').style.display = 'none';

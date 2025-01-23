@@ -69,6 +69,10 @@
     vertical-align: middle;
 }
 
+#button-save-editor-state {
+    margin-left: 15px;
+}
+
 iframe#webpack-dev-server-client-overlay {
     display: none !important;
 }
@@ -385,4 +389,45 @@ a {
 
 #code-editor-steps:hover::-webkit-scrollbar-thumb {
     background: #646464b3;
+}
+
+.toast {
+    display: none;
+    visibility: hidden;
+    min-width: 400px;
+    margin-left: -200px;
+    background-color: #4caf50;
+    text-shadow: 1px 1px #000;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 60px;
+    font-size: 17px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition:
+        opacity 0.5s ease,
+        visibility 0.5s;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+}
+
+.toast.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#select-editor-state.unsaved {
+    border: 2px solid #ff6161;
+}
+
+#editor-state-name.unsaved {
+    border: 2px solid #ff6161;
 }

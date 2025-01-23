@@ -4,4 +4,5 @@ interface EditorState {
     savedAt: Date;
     codeEditorContent: string;
     diffEditorContent: string;
+    unsaved?: boolean;
 }
