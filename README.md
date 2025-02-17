@@ -14,7 +14,6 @@ You can toggle between viewing the input and output as simple text or in a diff 
 
 [![TextWandler Logo](./images/screenshot_diff.png)](https://oliverthelen.github.io/textwandler/)
 
-
 ## Available functions
 
 These are the integrated functions to interact with the input content and generate the final output.
@@ -42,7 +41,7 @@ function transformLine(callback: (lineContent: string, lineNumber: number) => st
 
 ```js
 // Prefixes every line with the lineNumber
-transformLine((lineContent, lineNumber) => `${ lineNumber } ${ lineContent }`);
+transformLine((lineContent, lineNumber) => `${lineNumber} ${lineContent}`);
 ```
 
 ### reduce
@@ -57,14 +56,16 @@ function reduce(
         currentLineNumber: number,
         inputLinesArray: string[]
     ) => any,
-    initialValue?: any   
+    initialValue?: any
 ): void
 ```
 
 ```js
 // Parses every line from the input as a number and calculates the sum as the output
 reduce((result, line) => {
-    if(parseInt(line)) { result += parseInt(line); }
+    if (parseInt(line)) {
+        result += parseInt(line);
+    }
     return result;
 }, 0);
 ```
@@ -92,8 +93,11 @@ function jsonParse((input: object | array) => object | array): void
 
 ```js
 // Assumes as input an object like: {"a": 123}
-jsonParse((json) => { json.a++; return json; });
-// Output will be: 
+jsonParse((json) => {
+    json.a++;
+    return json;
+});
+// Output will be:
 // {
 //    "a": 124
 // }
@@ -113,9 +117,9 @@ transformLine((lineContent, lineNumber) => lineContent.substring(7));
 filterLine((lineContent, lineNumber) => parseInt(lineContent) % 2 != 0);
 // Transform the input into a comma separated list
 reduce((result, currentLine, currentLineNumber) => {
-    if(currentLineNumber === 0) return currentLine;
-    return `${ result },${currentLine}`;
-}, "");
+    if (currentLineNumber === 0) return currentLine;
+    return `${result},${currentLine}`;
+}, '');
 ```
 
 Initial input
@@ -147,7 +151,6 @@ After executing the `reduce`
 1,3
 ```
 
-
 ## Additional imports
 
 ### lodash
@@ -157,8 +160,3 @@ It is possible to use lodash functions in your code as the full lodash is availa
 ```js
 transformLine((lineContent) => _.snakeCase(lineContent));
 ```
-
-
-
-
-
