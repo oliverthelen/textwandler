@@ -47,6 +47,8 @@ export class TextWandler {
         this.setupUI();
         this.setupMonaco();
 
+        x =
+
         this.codeEditor = new Editor(INITIAL_EDITOR_CONTENT, 'code-editor');
         if (this.outputEditorMode === OUTPUT_EDITOR_MODE.SIDE_BY_SIDE_EDITOR) {
             this.textEditor = new SideBySideEditor(
