@@ -5,6 +5,7 @@ import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
+import { ActionUnique } from './actions/action-unique';
 
 export type ActionRunStep = {
     action: Action;
@@ -75,7 +76,7 @@ export class WandlerPipeline {
     }
 
     public getActionsForContext() {
-        return {
+        const functions = {
             filterLine: (
                 lineMapper: (line: string, lineNumber: number) => boolean
             ) => {
@@ -110,7 +111,16 @@ export class WandlerPipeline {
                 lineMapper: (line: string, lineNumber: number) => string
             ) => {
                 this.addAction(new ActionTransformLine(lineMapper));
+            },
+            unique: () => {
+                this.addAction(new ActionUnique());
             }
+        };
+
+        return {
+            ...functions,
+            textwandler: functions,
+            tw: functions
         };
     }
 }

@@ -22,6 +22,9 @@ reduce((result, line) => {
 
 //// Transform all lines via a callback  
 transformLine((lineContent, lineNumber) => lineContent + lineNumber);
+
+// All available functions are also exported with the wrappers textwandler and tw
+// So tw.transformLine() will work the same way transformLine() by itself works
 `;
 
 export const INITIAL_INPUT_CONTENT = 'a\nb\nc';

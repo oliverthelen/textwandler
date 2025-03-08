@@ -104,3 +104,29 @@ declare function CallbackTransformLine(
     lineContent: string,
     lineNumber: number
 ): string;
+
+/**
+ * Filters all lines and leaves only unique ones as a result for the next stage
+ * @returns void
+ */
+declare function unique(): void;
+
+declare interface TextwandlerFunctions {
+    filterLine: typeof filterLine;
+    jsonParse: typeof jsonParse;
+    jsonStringify: typeof jsonStringify;
+    reduce: typeof reduce;
+    setValue: typeof setValue;
+    transformLine: typeof transformLine;
+    unique: typeof unique;
+}
+
+/**
+ * Textwandler wrapper
+ */
+declare const textwandler: TextwandlerFunctions;
+
+/**
+ * Textwandler wrapper
+ */
+declare const tw: TextwandlerFunctions;

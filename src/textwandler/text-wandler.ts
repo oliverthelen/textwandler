@@ -111,6 +111,12 @@ export class TextWandler {
                 );
             }
         });
+
+        monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+            target: monaco.languages.typescript.ScriptTarget.ES2015,
+            lib: ['es2015'],
+            allowNonTsExtensions: true
+        });
     }
 
     private setupUI() {
