@@ -70,6 +70,18 @@ reduce((result, line) => {
 }, 0);
 ```
 
+### unique
+
+Filters all lines and leaves only unique ones as a result for the next stage
+
+```js
+function unique(): void
+```
+
+```js
+unique();
+```
+
 ### setValue
 
 Allows to set the whole output to the result of the callback which gets the results of the previous function chain as the input.
