@@ -26,6 +26,7 @@ import {
 } from '../helper/globals';
 import { SideBySideEditor } from '../editor/side-by-side-editor';
 import { kebabCase } from 'lodash';
+import { EditorState } from './editor-state';
 
 enum OUTPUT_EDITOR_MODE {
     SIDE_BY_SIDE_EDITOR,

@@ -1,3 +1,5 @@
+import { EditorState } from './editor-state';
+
 export class StateManager {
     private db: IDBDatabase;
     private initialized: boolean = false;
@@ -9,7 +11,7 @@ export class StateManager {
         return new Promise((resolve, reject) => {
             const request = indexedDB.open('text-wandler', 1);
 
-            request.onupgradeneeded = (event) => {
+            request.onupgradeneeded = (_event) => {
                 this.db = request.result;
                 const store = this.db.createObjectStore('editor-states', {
                     keyPath: 'id'
