@@ -1,16 +1,25 @@
-const webpack = require('webpack');
-const TerserPlugin = require('terser-webpack-plugin');
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const fs = require('fs');
-const path = require('path');
-const packageJson = require('./package.json');
+import pkg from 'webpack';
+import { fileURLToPath } from 'url';
+import { dirname, resolve as _resolve } from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import { GenerateSW } from 'workbox-webpack-plugin';
+import { readFileSync } from 'fs';
+import { createRequire } from 'node:module';
 
-const actionFunctions = fs.readFileSync(
-    path.resolve(__dirname, './src/monaco-extra-libs/action-functions.d.ts'),
+const { DefinePlugin } = pkg;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const require = createRequire(import.meta.url);
+const { version } = require('./package.json');
+
+const actionFunctions = readFileSync(
+    _resolve(__dirname, './src/monaco-extra-libs/action-functions.d.ts'),
     'utf8'
 );
 const lodash = [
@@ -28,18 +37,17 @@ const lodash = [
     'string',
     'util'
 ].reduce((result, key) => {
-    const fileContent = fs.readFileSync(
-        path.resolve(
+    result[key] = readFileSync(
+        _resolve(
             __dirname,
             `./node_modules/@types/lodash/${key === 'index' ? '' : 'common/'}${key}.d.ts`
         ),
         'utf8'
     );
-    result[key] = fileContent;
     return result;
 }, {});
 
-module.exports = (env, argv) => ({
+export default (env, argv) => ({
     entry: './src/index.ts',
     devtool: 'inline-source-map',
     mode: argv.mode === 'production' ? 'production' : 'development',
@@ -64,7 +72,7 @@ module.exports = (env, argv) => ({
             {
                 test: /\.png$/,
                 type: 'asset/resource',
-                include: path.resolve(__dirname, 'assets')
+                include: _resolve(__dirname, 'assets')
             }
         ]
     },
@@ -74,7 +82,7 @@ module.exports = (env, argv) => ({
     output: {
         filename: '[name].bundle.js',
         library: 'textWandler',
-        path: path.resolve(__dirname, 'dist')
+        path: _resolve(__dirname, 'dist')
     },
     optimization: {
         runtimeChunk: 'single',
@@ -85,18 +93,29 @@ module.exports = (env, argv) => ({
                       new TerserPlugin({
                           terserOptions: {
                               compress: {
+                                  dead_code: true,
                                   unused: true,
-                                  dead_code: true
+                                  drop_console: true, // Remove console.* calls
+                                  drop_debugger: true, // Remove debugger statements
+                                  passes: 2, // Run compress twice for better results
+                                  pure_funcs: ['console.log'] // Treat console.log as side-effect-free
+                              },
+                              mangle: {
+                                  toplevel: true // Mangle top-level variable and function names
+                              },
+                              format: {
+                                  comments: false // Remove all comments
                               }
-                          }
+                          },
+                          extractComments: false // Don’t generate separate comment files
                       })
                   ]
               }
             : {})
     },
     plugins: [
-        new webpack.DefinePlugin({
-            VERSION: JSON.stringify(packageJson.version),
+        new DefinePlugin({
+            VERSION: JSON.stringify(version),
             WEBPACK_MODE: JSON.stringify(argv.mode ?? 'production'),
             ACTION_FUNCTIONS: JSON.stringify(actionFunctions),
             LODASH: JSON.stringify(lodash)
@@ -116,7 +135,7 @@ module.exports = (env, argv) => ({
             template: 'index.html'
         }),
         argv.mode === 'production'
-            ? new WorkboxPlugin.GenerateSW({
+            ? new GenerateSW({
                   clientsClaim: true,
                   skipWaiting: true,
                   maximumFileSizeToCacheInBytes: 50 * 1024 * 1024

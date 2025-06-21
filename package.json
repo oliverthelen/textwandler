@@ -3,6 +3,7 @@
     "version": "1.5.11",
     "description": "A crude local editor for transforming text input via JavaScript code",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "test": "vitest",
         "dev": "NODE_ENV=development webpack serve --open --watch --mode=development",
