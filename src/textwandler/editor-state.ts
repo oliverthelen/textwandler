@@ -1,4 +1,4 @@
-interface EditorState {
+export interface EditorState {
     id: string;
     name: string;
     savedAt: Date;

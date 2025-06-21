@@ -1,10 +1,14 @@
-import { WandlerPipeline } from '../../../src/textwandler/wandler-pipeline/pipeline';
-import { ActionTransformLine } from '../../../src/textwandler/wandler-pipeline/actions/action-transform-line';
-import { ActionSetValue } from '../../../src/textwandler/wandler-pipeline/actions/action-set-value';
-import { ActionFilterLine } from '../../../src/textwandler/wandler-pipeline/actions/action-filter-line';
-import { ActionReduce } from '../../../src/textwandler/wandler-pipeline/actions/action-reduce';
-import { ActionJsonStringify } from '../../../src/textwandler/wandler-pipeline/actions/action-json-stringify';
-import { ActionJsonParse } from '../../../src/textwandler/wandler-pipeline/actions/action-json-parse';
+import { describe, expect, it } from 'vitest';
+import {
+    ActionTransformLine,
+    ActionReduce,
+    ActionSetValue,
+    ActionFilterLine,
+    ActionJsonStringify,
+    ActionJsonParse,
+    WandlerPipeline,
+    ActionUnique
+} from '../../../src/textwandler';
 
 describe('Test of WandlerPipeline', () => {
     it('should execute actions', () => {
@@ -37,7 +41,11 @@ describe('Test of WandlerPipeline', () => {
             );
 
         const result = pipeline.run('abc\nabc\nabd\nabc');
-        expect(result).toEqual('aadc12\nadc12\nadc12');
+        expect(result).toMatchInlineSnapshot(`
+          "aadc12
+          adc12
+          adc12"
+        `);
     });
 
     it('should execute reduce action', () => {
@@ -63,7 +71,7 @@ describe('Test of WandlerPipeline', () => {
         const result = pipeline.run(
             'a\n' + 'b\n' + '1\n' + 'c\n' + '1\n' + '2\n' + 'x\n' + 'y\n' + 'z'
         );
-        expect(result).toEqual('4');
+        expect(result).toMatchInlineSnapshot(`"4"`);
     });
 
     it('should execute jsonStringify action', () => {
@@ -95,30 +103,30 @@ describe('Test of WandlerPipeline', () => {
                     '   ]\n' +
                     '}'
             )
-        ).toEqual(
-            '{\n' +
-                '    "string": "Hello, World!",\n' +
-                '    "number": 42,\n' +
-                '    "float": 3.14,\n' +
-                '    "boolean": true,\n' +
-                '    "null": null,\n' +
-                '    "object": {\n' +
-                '        "key": "value",\n' +
-                '        "nestedObject": {\n' +
-                '            "nestedKey": "nestedValue"\n' +
-                '        }\n' +
-                '    },\n' +
-                '    "array": [\n' +
-                '        1,\n' +
-                '        "two",\n' +
-                '        false,\n' +
-                '        null,\n' +
-                '        {\n' +
-                '            "key": "value"\n' +
-                '        }\n' +
-                '    ]\n' +
-                '}'
-        );
+        ).toMatchInlineSnapshot(`
+          "{
+              "string": "Hello, World!",
+              "number": 42,
+              "float": 3.14,
+              "boolean": true,
+              "null": null,
+              "object": {
+                  "key": "value",
+                  "nestedObject": {
+                      "nestedKey": "nestedValue"
+                  }
+              },
+              "array": [
+                  1,
+                  "two",
+                  false,
+                  null,
+                  {
+                      "key": "value"
+                  }
+              ]
+          }"
+        `);
     });
 
     it('should execute jsonParse action', () => {
@@ -156,29 +164,46 @@ describe('Test of WandlerPipeline', () => {
                     '   ]\n' +
                     '}'
             )
-        ).toEqual(
-            '{\n' +
-                '    "string": "Hello, World!",\n' +
-                '    "number": 43,\n' +
-                '    "float": 3.14,\n' +
-                '    "boolean": true,\n' +
-                '    "null": null,\n' +
-                '    "object": {\n' +
-                '        "key": "value",\n' +
-                '        "nestedObject": {\n' +
-                '            "nestedKey": "nestedValue"\n' +
-                '        }\n' +
-                '    },\n' +
-                '    "array": [\n' +
-                '        1,\n' +
-                '        "two",\n' +
-                '        false,\n' +
-                '        null,\n' +
-                '        {\n' +
-                '            "key": "value"\n' +
-                '        }\n' +
-                '    ]\n' +
-                '}'
+        ).toMatchInlineSnapshot(`
+          "{
+              "string": "Hello, World!",
+              "number": 43,
+              "float": 3.14,
+              "boolean": true,
+              "null": null,
+              "object": {
+                  "key": "value",
+                  "nestedObject": {
+                      "nestedKey": "nestedValue"
+                  }
+              },
+              "array": [
+                  1,
+                  "two",
+                  false,
+                  null,
+                  {
+                      "key": "value"
+                  }
+              ]
+          }"
+        `);
+    });
+
+    it('should execute unique action', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionUnique());
+
+        const result = pipeline.run(
+            'a\n' + 'b\n' + 'a\n' + 'a\n' + 'A\n' + 'c\n' + '1\n' + '1\n' + '2'
         );
+        expect(result).toMatchInlineSnapshot(`
+          "a
+          b
+          A
+          c
+          1
+          2"
+        `);
     });
 });
