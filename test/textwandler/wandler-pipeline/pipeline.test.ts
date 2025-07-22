@@ -7,6 +7,7 @@ import {
     ActionJsonStringify,
     ActionJsonParse,
     WandlerPipeline,
+    ActionSort,
     ActionUnique
 } from '../../../src/textwandler';
 
@@ -204,6 +205,45 @@ describe('Test of WandlerPipeline', () => {
           c
           1
           2"
+        `);
+    });
+
+    it('should execute sort action with default alphabetical sorting', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSort());
+
+        const result = pipeline.run('zebra\napple\nbanana\ncherry');
+        expect(result).toMatchInlineSnapshot(`
+          "apple
+          banana
+          cherry
+          zebra"
+        `);
+    });
+
+    it('should execute sort action with custom comparator function', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSort((a, b) => b.localeCompare(a)));
+
+        const result = pipeline.run('zebra\napple\nbanana\ncherry');
+        expect(result).toMatchInlineSnapshot(`
+          "zebra
+          cherry
+          banana
+          apple"
+        `);
+    });
+
+    it('should execute sort action with numeric sorting', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSort((a, b) => parseInt(a) - parseInt(b)));
+
+        const result = pipeline.run('100\n2\n30\n1');
+        expect(result).toMatchInlineSnapshot(`
+          "1
+          2
+          30
+          100"
         `);
     });
 });
