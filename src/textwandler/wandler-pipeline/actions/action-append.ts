@@ -9,7 +9,7 @@ export class ActionAppend extends Action {
 
     run(input: ActionResult): ActionResult {
         const lines = input.text.split(/\n/);
-        const appendedLines = lines.map(line => line + this.suffix);
+        const appendedLines = lines.map((line) => line + this.suffix);
         input.text = appendedLines.join('\n');
         return input;
     }
