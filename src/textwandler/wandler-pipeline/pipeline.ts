@@ -1,6 +1,7 @@
 import { Action, ActionResult } from './actions/action';
 import { ActionTransformLine } from './actions/action-transform-line';
 import { ActionFilterLine } from './actions/action-filter-line';
+import { ActionGrep } from './actions/action-grep';
 import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
@@ -81,6 +82,9 @@ export class WandlerPipeline {
                 lineMapper: (line: string, lineNumber: number) => boolean
             ) => {
                 this.addAction(new ActionFilterLine(lineMapper));
+            },
+            grep: (pattern: string | RegExp, invert?: boolean) => {
+                this.addAction(new ActionGrep(pattern, invert));
             },
             jsonParse: (
                 transformJsonFunction: (

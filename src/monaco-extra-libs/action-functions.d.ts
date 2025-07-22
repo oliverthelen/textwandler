@@ -18,6 +18,14 @@ declare function CallbackFilterLine(
 ): boolean;
 
 /**
+ * Filters lines matching a pattern (similar to Unix grep command)
+ * @param {string | RegExp} pattern The string or regex pattern to search for
+ * @param {boolean} [invert=false] If true, returns lines that do NOT match the pattern
+ * @returns void
+ */
+declare function grep(pattern: string | RegExp, invert?: boolean): void;
+
+/**
  * Parses the output of the previous action to a json object and gives it to the provided callback
  * @param {CallbackJsonParse} callback The provided callback will be called with the json object parsed from the output of the previous action
  * @param {number} [indentation=2] The indentation that is used to stringify the json object
@@ -113,6 +121,7 @@ declare function unique(): void;
 
 declare interface TextwandlerFunctions {
     filterLine: typeof filterLine;
+    grep: typeof grep;
     jsonParse: typeof jsonParse;
     jsonStringify: typeof jsonStringify;
     reduce: typeof reduce;

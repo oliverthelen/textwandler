@@ -31,6 +31,28 @@ function filterLine(callback: (lineContent: string, lineNumber: number) => boole
 filterLine((lineContent, lineNumber) => lineNumber % 2 === 0);
 ```
 
+### grep
+
+Filters lines matching a pattern, similar to the Unix grep command. Supports both string and regex patterns.
+
+```js
+function grep(pattern: string | RegExp, invert?: boolean): void
+```
+
+```js
+// Keep lines containing 'error'
+grep('error');
+
+// Keep lines starting with numbers
+grep(/^\d+/);
+
+// Keep lines that do NOT contain 'debug' (inverted match)
+grep('debug', true);
+
+// Case-insensitive search
+grep(/error/i);
+```
+
 ### transformLine
 
 Iterates over every line of the input and puts the result of the callback into the output in its place.

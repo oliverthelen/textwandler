@@ -91,3 +91,30 @@ test('Action: unique', async ({ page }) => {
         `x\nz\n111\n222`
     );
 });
+
+test('Action: grep - string pattern', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep('error');`,
+        `info: starting\nerror: failed\nwarn: issue\nerror: timeout`,
+        `error: failed\nerror: timeout`
+    );
+});
+
+test('Action: grep - regex pattern', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep(/^\\d+/);`,
+        `123 number line\ntext line\n456 another number\nmore text`,
+        `123 number line\n456 another number`
+    );
+});
+
+test('Action: grep - with invert flag', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep('error', true);`,
+        `info: starting\nerror: failed\nwarn: issue\nerror: timeout`,
+        `info: starting\nwarn: issue`
+    );
+});

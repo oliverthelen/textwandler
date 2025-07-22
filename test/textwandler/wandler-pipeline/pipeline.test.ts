@@ -4,6 +4,7 @@ import {
     ActionReduce,
     ActionSetValue,
     ActionFilterLine,
+    ActionGrep,
     ActionJsonStringify,
     ActionJsonParse,
     WandlerPipeline,
@@ -204,6 +205,39 @@ describe('Test of WandlerPipeline', () => {
           c
           1
           2"
+        `);
+    });
+
+    it('should execute grep action with string pattern', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionGrep('error'));
+
+        const result = pipeline.run('info: starting\nerror: failed\nwarn: issue\nerror: timeout');
+        expect(result).toMatchInlineSnapshot(`
+          "error: failed
+          error: timeout"
+        `);
+    });
+
+    it('should execute grep action with regex pattern', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionGrep(/^\d+/));
+
+        const result = pipeline.run('123 number line\ntext line\n456 another number\nmore text');
+        expect(result).toMatchInlineSnapshot(`
+          "123 number line
+          456 another number"
+        `);
+    });
+
+    it('should execute grep action with invert flag', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionGrep('error', true));
+
+        const result = pipeline.run('info: starting\nerror: failed\nwarn: issue\nerror: timeout');
+        expect(result).toMatchInlineSnapshot(`
+          "info: starting
+          warn: issue"
         `);
     });
 });
