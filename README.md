@@ -94,6 +94,28 @@ function setValue((input: string) => string): void
 setValue(() => 'set the output to this string\nnext line');
 ```
 
+### join
+
+Joins all lines with a specified separator. Useful for converting multi-line text to single line or custom formats.
+
+```js
+function join(separator?: string): void
+```
+
+```js
+// Join lines with comma and space
+join(', ');
+
+// Join lines with pipe separator
+join(' | ');
+
+// Join lines with just space
+join(' ');
+
+// Default behavior (keeps newlines)
+join();
+```
+
 ### jsonParse
 
 Parses the input as a json object or array and allows the manipulation in the callback.

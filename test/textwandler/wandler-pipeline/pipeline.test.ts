@@ -4,6 +4,7 @@ import {
     ActionReduce,
     ActionSetValue,
     ActionFilterLine,
+    ActionJoin,
     ActionJsonStringify,
     ActionJsonParse,
     WandlerPipeline,
@@ -204,6 +205,34 @@ describe('Test of WandlerPipeline', () => {
           c
           1
           2"
+        `);
+    });
+
+    it('should execute join action with comma separator', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionJoin(', '));
+
+        const result = pipeline.run('apple\nbanana\ncherry\ndate');
+        expect(result).toMatchInlineSnapshot(`"apple, banana, cherry, date"`);
+    });
+
+    it('should execute join action with pipe separator', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionJoin(' | '));
+
+        const result = pipeline.run('first\nsecond\nthird');
+        expect(result).toMatchInlineSnapshot(`"first | second | third"`);
+    });
+
+    it('should execute join action with default separator', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionJoin());
+
+        const result = pipeline.run('line1\nline2\nline3');
+        expect(result).toMatchInlineSnapshot(`
+          "line1
+          line2
+          line3"
         `);
     });
 });

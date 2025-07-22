@@ -1,5 +1,6 @@
 export { Action } from './action';
 export { ActionFilterLine } from './action-filter-line';
+export { ActionJoin } from './action-join';
 export { ActionJsonParse } from './action-json-parse';
 export { ActionJsonStringify } from './action-json-stringify';
 export { ActionReduce } from './action-reduce';
