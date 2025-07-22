@@ -5,6 +5,7 @@ import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
+import { ActionReplace } from './actions/action-replace';
 import { ActionUnique } from './actions/action-unique';
 
 export type ActionRunStep = {
@@ -103,6 +104,13 @@ export class WandlerPipeline {
                 initialValue: any
             ) => {
                 this.addAction(new ActionReduce(reduceFunction, initialValue));
+            },
+            replace: (
+                searchValue: string | RegExp,
+                replaceValue: string,
+                flags?: string
+            ) => {
+                this.addAction(new ActionReplace(searchValue, replaceValue, flags));
             },
             setValue: (transformFunction: (input: string) => string) => {
                 this.addAction(new ActionSetValue(transformFunction));

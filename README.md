@@ -70,6 +70,28 @@ reduce((result, line) => {
 }, 0);
 ```
 
+### replace
+
+Replaces text across all lines using string or regex patterns. Supports flags for advanced string matching.
+
+```js
+function replace(searchValue: string | RegExp, replaceValue: string, flags?: string): void
+```
+
+```js
+// Simple string replacement
+replace('old', 'new');
+
+// Regex replacement
+replace(/\d+/g, 'NUMBER');
+
+// Case-insensitive replacement
+replace('hello', 'hi', 'gi');
+
+// Replace multiple patterns
+replace(/\s+/g, '_');  // Replace whitespace with underscores
+```
+
 ### unique
 
 Filters all lines and leaves only unique ones as a result for the next stage

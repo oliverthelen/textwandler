@@ -91,3 +91,30 @@ test('Action: unique', async ({ page }) => {
         `x\nz\n111\n222`
     );
 });
+
+test('Action: replace - string replacement', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `replace('old', 'new');`,
+        `old text\nold value\nkeep this old word`,
+        `new text\nnew value\nkeep this new word`
+    );
+});
+
+test('Action: replace - with regex', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `replace(/\\d+/g, 'NUMBER');`,
+        `line 123\nvalue 456\nno numbers here`,
+        `line NUMBER\nvalue NUMBER\nno numbers here`
+    );
+});
+
+test('Action: replace - case insensitive', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `replace('hello', 'hi', 'gi');`,
+        `Hello world\nhello there\nHELLO everyone`,
+        `hi world\nhi there\nhi everyone`
+    );
+});

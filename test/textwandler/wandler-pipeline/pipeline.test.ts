@@ -7,6 +7,7 @@ import {
     ActionJsonStringify,
     ActionJsonParse,
     WandlerPipeline,
+    ActionReplace,
     ActionUnique
 } from '../../../src/textwandler';
 
@@ -204,6 +205,42 @@ describe('Test of WandlerPipeline', () => {
           c
           1
           2"
+        `);
+    });
+
+    it('should execute replace action with string replacement', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionReplace('old', 'new'));
+
+        const result = pipeline.run('old text\nold value\nkeep this old word');
+        expect(result).toMatchInlineSnapshot(`
+          "new text
+          new value
+          keep this new word"
+        `);
+    });
+
+    it('should execute replace action with regex replacement', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionReplace(/\d+/g, 'NUMBER'));
+
+        const result = pipeline.run('line 123\nvalue 456\nno numbers here');
+        expect(result).toMatchInlineSnapshot(`
+          "line NUMBER
+          value NUMBER
+          no numbers here"
+        `);
+    });
+
+    it('should execute replace action with case insensitive flag', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionReplace('hello', 'hi', 'gi'));
+
+        const result = pipeline.run('Hello world\nhello there\nHELLO everyone');
+        expect(result).toMatchInlineSnapshot(`
+          "hi world
+          hi there
+          hi everyone"
         `);
     });
 });
