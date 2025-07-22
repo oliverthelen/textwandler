@@ -91,3 +91,30 @@ test('Action: unique', async ({ page }) => {
         `x\nz\n111\n222`
     );
 });
+
+test('Action: trim - both sides', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `trim();`,
+        `  line1  \n\t\tline2\t\t\n   line3   `,
+        `line1\nline2\nline3`
+    );
+});
+
+test('Action: trimStart - left side only', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `trimStart();`,
+        `  line1  \n\t\tline2\t\t\n   line3   `,
+        `line1  \nline2\t\t\nline3   `
+    );
+});
+
+test('Action: trimEnd - right side only', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `trimEnd();`,
+        `  line1  \n\t\tline2\t\t\n   line3   `,
+        `  line1\n\t\tline2\n   line3`
+    );
+});

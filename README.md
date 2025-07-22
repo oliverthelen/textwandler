@@ -44,6 +44,30 @@ function transformLine(callback: (lineContent: string, lineNumber: number) => st
 transformLine((lineContent, lineNumber) => `${lineNumber} ${lineContent}`);
 ```
 
+### trim
+
+Removes whitespace from the beginning and/or end of each line. Includes convenience methods for specific trimming.
+
+```js
+function trim(mode?: 'both' | 'start' | 'end'): void
+function trimStart(): void
+function trimEnd(): void
+```
+
+```js
+// Remove whitespace from both sides (default)
+trim();
+trim('both');
+
+// Remove whitespace from start only
+trim('start');
+trimStart();
+
+// Remove whitespace from end only
+trim('end');
+trimEnd();
+```
+
 ### reduce
 
 Iterates over every line and gives it to the provided callback. In the end the result of the last callback execution is stringified and written to the output.

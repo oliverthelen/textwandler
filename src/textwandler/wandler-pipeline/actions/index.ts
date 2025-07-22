@@ -5,4 +5,5 @@ export { ActionJsonStringify } from './action-json-stringify';
 export { ActionReduce } from './action-reduce';
 export { ActionSetValue } from './action-set-value';
 export { ActionTransformLine } from './action-transform-line';
+export { ActionTrim } from './action-trim';
 export { ActionUnique } from './action-unique';
