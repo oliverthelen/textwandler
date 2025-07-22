@@ -12,7 +12,7 @@ export class ActionGrep extends Action {
 
     run(input: ActionResult): ActionResult {
         const lines = input.text.split(/\n/);
-        
+
         let regex: RegExp;
         if (typeof this.pattern === 'string') {
             regex = new RegExp(this.pattern);
@@ -20,7 +20,7 @@ export class ActionGrep extends Action {
             regex = this.pattern;
         }
 
-        const filteredLines = lines.filter(line => {
+        const filteredLines = lines.filter((line) => {
             const matches = regex.test(line);
             return this.invert ? !matches : matches;
         });

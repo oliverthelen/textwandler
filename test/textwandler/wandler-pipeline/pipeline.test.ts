@@ -291,7 +291,9 @@ describe('Test of WandlerPipeline', () => {
         const pipeline = new WandlerPipeline();
         pipeline.addAction(new ActionGrep('error'));
 
-        const result = pipeline.run('info: starting\nerror: failed\nwarn: issue\nerror: timeout');
+        const result = pipeline.run(
+            'info: starting\nerror: failed\nwarn: issue\nerror: timeout'
+        );
         expect(result).toMatchInlineSnapshot(`
           "error: failed
           error: timeout"
@@ -302,7 +304,9 @@ describe('Test of WandlerPipeline', () => {
         const pipeline = new WandlerPipeline();
         pipeline.addAction(new ActionGrep(/^\d+/));
 
-        const result = pipeline.run('123 number line\ntext line\n456 another number\nmore text');
+        const result = pipeline.run(
+            '123 number line\ntext line\n456 another number\nmore text'
+        );
         expect(result).toMatchInlineSnapshot(`
           "123 number line
           456 another number"
@@ -313,7 +317,9 @@ describe('Test of WandlerPipeline', () => {
         const pipeline = new WandlerPipeline();
         pipeline.addAction(new ActionGrep('error', true));
 
-        const result = pipeline.run('info: starting\nerror: failed\nwarn: issue\nerror: timeout');
+        const result = pipeline.run(
+            'info: starting\nerror: failed\nwarn: issue\nerror: timeout'
+        );
         expect(result).toMatchInlineSnapshot(`
           "info: starting
           warn: issue"
