@@ -92,6 +92,33 @@ test('Action: unique', async ({ page }) => {
     );
 });
 
+test('Action: sort - default alphabetical', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `sort();`,
+        `zebra\napple\nbanana\ncherry`,
+        `apple\nbanana\ncherry\nzebra`
+    );
+});
+
+test('Action: sort - with comparator function', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `sort((a, b) => b.localeCompare(a));`,
+        `zebra\napple\nbanana\ncherry`,
+        `zebra\ncherry\nbanana\napple`
+    );
+});
+
+test('Action: sort - numeric sorting', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `sort((a, b) => parseInt(a) - parseInt(b));`,
+        `100\n2\n30\n1`,
+        `1\n2\n30\n100`
+    );
+});
+
 test('Action: append - checkmark suffix', async ({ page }) => {
     await testEditorContent(
         page,

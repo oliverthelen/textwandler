@@ -5,5 +5,6 @@ export { ActionJsonParse } from './action-json-parse';
 export { ActionJsonStringify } from './action-json-stringify';
 export { ActionReduce } from './action-reduce';
 export { ActionSetValue } from './action-set-value';
+export { ActionSort } from './action-sort';
 export { ActionTransformLine } from './action-transform-line';
 export { ActionUnique } from './action-unique';

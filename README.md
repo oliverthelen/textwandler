@@ -104,6 +104,28 @@ function unique(): void
 unique();
 ```
 
+### sort
+
+Sorts all lines using an optional comparator function. If no comparator is provided, lines are sorted alphabetically.
+
+```js
+function sort(callback?: (a: string, b: string) => number): void
+```
+
+```js
+// Sort lines alphabetically (default behavior)
+sort();
+
+// Sort lines in reverse alphabetical order
+sort((a, b) => b.localeCompare(a));
+
+// Sort lines numerically
+sort((a, b) => parseInt(a) - parseInt(b));
+
+// Sort lines by length
+sort((a, b) => a.length - b.length);
+```
+
 ### setValue
 
 Allows to set the whole output to the result of the callback which gets the results of the previous function chain as the input.
