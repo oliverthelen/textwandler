@@ -1,4 +1,11 @@
 /**
+ * Adds a suffix to the end of each line
+ * @param {string} suffix The string to append to each line
+ * @returns void
+ */
+declare function append(suffix: string): void;
+
+/**
  * Filters out lines from the output of the previous action if the given callback returns true for a line
  * @param {CallbackFilterLine} callback The provided callback will be called for every line that comes from the previous action
  * @returns void
@@ -127,6 +134,7 @@ declare function CallbackTransformLine(
 declare function unique(): void;
 
 declare interface TextwandlerFunctions {
+    append: typeof append;
     filterLine: typeof filterLine;
     jsonParse: typeof jsonParse;
     jsonStringify: typeof jsonStringify;

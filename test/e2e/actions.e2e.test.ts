@@ -118,3 +118,30 @@ test('Action: sort - numeric sorting', async ({ page }) => {
         `1\n2\n30\n100`
     );
 });
+
+test('Action: append - checkmark suffix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append('✓');`,
+        `statement_one\nstatement_two\nstatement_three`,
+        `statement_one✓\nstatement_two✓\nstatement_three✓`
+    );
+});
+
+test('Action: append - semicolon suffix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append(';');`,
+        `statement_one\nstatement_two\nstatement_three`,
+        `statement_one;\nstatement_two;\nstatement_three;`
+    );
+});
+
+test('Action: append - file extension', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append('.txt');`,
+        `file1\nfile2\nfile3`,
+        `file1.txt\nfile2.txt\nfile3.txt`
+    );
+});

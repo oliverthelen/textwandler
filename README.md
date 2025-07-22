@@ -18,6 +18,28 @@ You can toggle between viewing the input and output as simple text or in a diff 
 
 These are the integrated functions to interact with the input content and generate the final output.
 
+### append
+
+Adds a suffix to the end of each line. Useful for adding file extensions, punctuation, or completion markers.
+
+```js
+function append(suffix: string): void
+```
+
+```js
+// Add checkmark to completed tasks
+append(' ✓');
+
+// Add semicolons to statements
+append(';');
+
+// Add file extensions
+append('.txt');
+
+// Add closing tags
+append('</li>');
+```
+
 ### filterLine
 
 Iterates over every line of the input and only keeps those lines for which the callback returns true.
