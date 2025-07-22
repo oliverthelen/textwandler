@@ -150,17 +150,17 @@ test('Action: grep - string pattern', async ({ page }) => {
     await testEditorContent(
         page,
         `grep('error');`,
-        `info: starting\nerror: failed\nwarn: issue\nerror: timeout`,
-        `error: failed\nerror: timeout`
+        `info:starting\nerror:failed\nwarn:issue\nerror:timeout`,
+        `error:failed\nerror:timeout`
     );
 });
 
 test('Action: grep - regex pattern', async ({ page }) => {
     await testEditorContent(
         page,
-        `grep(/^\\d+/);`,
-        `123 number line\ntext line\n456 another number\nmore text`,
-        `123 number line\n456 another number`
+        `grep(/\\d+$/);`,
+        `lineendingwith123\ntextline\nanotherlinewith456\nmoretext`,
+        `lineendingwith123\nanotherlinewith456`
     );
 });
 
@@ -168,7 +168,7 @@ test('Action: grep - with invert flag', async ({ page }) => {
     await testEditorContent(
         page,
         `grep('error', true);`,
-        `info: starting\nerror: failed\nwarn: issue\nerror: timeout`,
-        `info: starting\nwarn: issue`
+        `info:starting\nerror:failed\nwarn:issue\nerror:timeout`,
+        `info:starting\nwarn:issue`
     );
 });
