@@ -7,6 +7,7 @@ import {
     ActionJsonStringify,
     ActionJsonParse,
     WandlerPipeline,
+    ActionPrepend,
     ActionUnique
 } from '../../../src/textwandler';
 
@@ -204,6 +205,42 @@ describe('Test of WandlerPipeline', () => {
           c
           1
           2"
+        `);
+    });
+
+    it('should execute prepend action with simple prefix', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionPrepend('> '));
+
+        const result = pipeline.run('first line\nsecond line\nthird line');
+        expect(result).toMatchInlineSnapshot(`
+          "> first line
+          > second line
+          > third line"
+        `);
+    });
+
+    it('should execute prepend action with numbered prefix', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionPrepend('TODO: '));
+
+        const result = pipeline.run('fix bug\nwrite tests\nupdate docs');
+        expect(result).toMatchInlineSnapshot(`
+          "TODO: fix bug
+          TODO: write tests
+          TODO: update docs"
+        `);
+    });
+
+    it('should execute prepend action with special characters', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionPrepend('- [ ] '));
+
+        const result = pipeline.run('task one\ntask two\ntask three');
+        expect(result).toMatchInlineSnapshot(`
+          "- [ ] task one
+          - [ ] task two
+          - [ ] task three"
         `);
     });
 });

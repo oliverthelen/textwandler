@@ -91,3 +91,30 @@ test('Action: unique', async ({ page }) => {
         `x\nz\n111\n222`
     );
 });
+
+test('Action: prepend - quote prefix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `prepend('> ');`,
+        `first line\nsecond line\nthird line`,
+        `> first line\n> second line\n> third line`
+    );
+});
+
+test('Action: prepend - todo prefix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `prepend('TODO: ');`,
+        `fix bug\nwrite tests\nupdate docs`,
+        `TODO: fix bug\nTODO: write tests\nTODO: update docs`
+    );
+});
+
+test('Action: prepend - checkbox prefix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `prepend('- [ ] ');`,
+        `task one\ntask two\ntask three`,
+        `- [ ] task one\n- [ ] task two\n- [ ] task three`
+    );
+});

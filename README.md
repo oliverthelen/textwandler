@@ -94,6 +94,28 @@ function setValue((input: string) => string): void
 setValue(() => 'set the output to this string\nnext line');
 ```
 
+### prepend
+
+Adds a prefix to the beginning of each line. Useful for creating quotes, todos, or formatted lists.
+
+```js
+function prepend(prefix: string): void
+```
+
+```js
+// Add quote prefix
+prepend('> ');
+
+// Add TODO prefix
+prepend('TODO: ');
+
+// Add checkbox prefix
+prepend('- [ ] ');
+
+// Add line numbers (static)
+prepend('001: ');
+```
+
 ### jsonParse
 
 Parses the input as a json object or array and allows the manipulation in the callback.

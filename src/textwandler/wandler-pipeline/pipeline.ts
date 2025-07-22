@@ -5,6 +5,7 @@ import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
+import { ActionPrepend } from './actions/action-prepend';
 import { ActionUnique } from './actions/action-unique';
 
 export type ActionRunStep = {
@@ -93,6 +94,9 @@ export class WandlerPipeline {
             },
             jsonStringify: (indentation?: number) =>
                 this.addAction(new ActionJsonStringify(indentation)),
+            prepend: (prefix: string) => {
+                this.addAction(new ActionPrepend(prefix));
+            },
             reduce: (
                 reduceFunction: (
                     result: string,
