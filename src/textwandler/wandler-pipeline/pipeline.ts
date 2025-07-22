@@ -1,4 +1,5 @@
 import { Action, ActionResult } from './actions/action';
+import { ActionAppend } from './actions/action-append';
 import { ActionTransformLine } from './actions/action-transform-line';
 import { ActionFilterLine } from './actions/action-filter-line';
 import { ActionSetValue } from './actions/action-set-value';
@@ -77,6 +78,9 @@ export class WandlerPipeline {
 
     public getActionsForContext() {
         const functions = {
+            append: (suffix: string) => {
+                this.addAction(new ActionAppend(suffix));
+            },
             filterLine: (
                 lineMapper: (line: string, lineNumber: number) => boolean
             ) => {

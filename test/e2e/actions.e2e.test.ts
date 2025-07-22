@@ -91,3 +91,30 @@ test('Action: unique', async ({ page }) => {
         `x\nz\n111\n222`
     );
 });
+
+test('Action: append - checkmark suffix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append(' ✓');`,
+        `first line\nsecond line\nthird line`,
+        `first line ✓\nsecond line ✓\nthird line ✓`
+    );
+});
+
+test('Action: append - semicolon suffix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append(';');`,
+        `statement one\nstatement two\nstatement three`,
+        `statement one;\nstatement two;\nstatement three;`
+    );
+});
+
+test('Action: append - file extension', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append('.txt');`,
+        `file1\nfile2\nfile3`,
+        `file1.txt\nfile2.txt\nfile3.txt`
+    );
+});
