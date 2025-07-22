@@ -14,7 +14,7 @@ export class ActionSort extends Action {
         const sortedLines = this.comparatorFunction
             ? lines.sort(this.comparatorFunction)
             : lines.sort();
-        
+
         input.text = sortedLines.join('\n');
         return input;
     }
