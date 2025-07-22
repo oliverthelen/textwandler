@@ -5,6 +5,7 @@ import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
+import { ActionReverse } from './actions/action-reverse';
 import { ActionUnique } from './actions/action-unique';
 
 export type ActionRunStep = {
@@ -103,6 +104,9 @@ export class WandlerPipeline {
                 initialValue: any
             ) => {
                 this.addAction(new ActionReduce(reduceFunction, initialValue));
+            },
+            reverse: () => {
+                this.addAction(new ActionReverse());
             },
             setValue: (transformFunction: (input: string) => string) => {
                 this.addAction(new ActionSetValue(transformFunction));

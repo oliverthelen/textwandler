@@ -91,3 +91,12 @@ test('Action: unique', async ({ page }) => {
         `x\nz\n111\n222`
     );
 });
+
+test('Action: reverse', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `reverse();`,
+        `first\nsecond\nthird\nfourth`,
+        `fourth\nthird\nsecond\nfirst`
+    );
+});

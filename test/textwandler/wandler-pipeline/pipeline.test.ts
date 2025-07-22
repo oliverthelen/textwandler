@@ -7,6 +7,7 @@ import {
     ActionJsonStringify,
     ActionJsonParse,
     WandlerPipeline,
+    ActionReverse,
     ActionUnique
 } from '../../../src/textwandler';
 
@@ -204,6 +205,19 @@ describe('Test of WandlerPipeline', () => {
           c
           1
           2"
+        `);
+    });
+
+    it('should execute reverse action', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionReverse());
+
+        const result = pipeline.run('first\nsecond\nthird\nfourth');
+        expect(result).toMatchInlineSnapshot(`
+          "fourth
+          third
+          second
+          first"
         `);
     });
 });
