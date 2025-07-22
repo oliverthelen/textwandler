@@ -264,7 +264,9 @@ describe('Test of WandlerPipeline', () => {
         const pipeline = new WandlerPipeline();
         pipeline.addAction(new ActionAppend(';'));
 
-        const result = pipeline.run('statement one\nstatement two\nstatement three');
+        const result = pipeline.run(
+            'statement one\nstatement two\nstatement three'
+        );
         expect(result).toMatchInlineSnapshot(`
           "statement one;
           statement two;
