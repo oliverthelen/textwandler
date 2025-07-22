@@ -18,6 +18,28 @@ You can toggle between viewing the input and output as simple text or in a diff 
 
 These are the integrated functions to interact with the input content and generate the final output.
 
+### append
+
+Adds a suffix to the end of each line. Useful for adding file extensions, punctuation, or completion markers.
+
+```js
+function append(suffix: string): void
+```
+
+```js
+// Add checkmark to completed tasks
+append(' ✓');
+
+// Add semicolons to statements
+append(';');
+
+// Add file extensions
+append('.txt');
+
+// Add closing tags
+append('</li>');
+```
+
 ### filterLine
 
 Iterates over every line of the input and only keeps those lines for which the callback returns true.
@@ -102,6 +124,28 @@ function unique(): void
 
 ```js
 unique();
+```
+
+### sort
+
+Sorts all lines using an optional comparator function. If no comparator is provided, lines are sorted alphabetically.
+
+```js
+function sort(callback?: (a: string, b: string) => number): void
+```
+
+```js
+// Sort lines alphabetically (default behavior)
+sort();
+
+// Sort lines in reverse alphabetical order
+sort((a, b) => b.localeCompare(a));
+
+// Sort lines numerically
+sort((a, b) => parseInt(a) - parseInt(b));
+
+// Sort lines by length
+sort((a, b) => a.length - b.length);
 ```
 
 ### setValue

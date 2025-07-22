@@ -1,9 +1,11 @@
 export { Action } from './action';
+export { ActionAppend } from './action-append';
 export { ActionFilterLine } from './action-filter-line';
 export { ActionGrep } from './action-grep';
 export { ActionJsonParse } from './action-json-parse';
 export { ActionJsonStringify } from './action-json-stringify';
 export { ActionReduce } from './action-reduce';
 export { ActionSetValue } from './action-set-value';
+export { ActionSort } from './action-sort';
 export { ActionTransformLine } from './action-transform-line';
 export { ActionUnique } from './action-unique';
