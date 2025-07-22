@@ -122,9 +122,9 @@ test('Action: sort - numeric sorting', async ({ page }) => {
 test('Action: append - checkmark suffix', async ({ page }) => {
     await testEditorContent(
         page,
-        `append(' ✓');`,
-        `first line\nsecond line\nthird line`,
-        `first line ✓\nsecond line ✓\nthird line ✓`
+        `append('✓');`,
+        `statement_one\nstatement_two\nstatement_three`,
+        `statement_one✓\nstatement_two✓\nstatement_three✓`
     );
 });
 
@@ -132,8 +132,8 @@ test('Action: append - semicolon suffix', async ({ page }) => {
     await testEditorContent(
         page,
         `append(';');`,
-        `statement one\nstatement two\nstatement three`,
-        `statement one;\nstatement two;\nstatement three;`
+        `statement_one\nstatement_two\nstatement_three`,
+        `statement_one;\nstatement_two;\nstatement_three;`
     );
 });
 
