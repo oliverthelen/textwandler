@@ -87,6 +87,13 @@ declare function setValue(callback: typeof CallbackSetValue): void;
 declare function CallbackSetValue(input: string): string;
 
 /**
+ * Splits each line into multiple lines using a separator
+ * @param {string | RegExp} separator The separator to split on (string or regex)
+ * @returns void
+ */
+declare function split(separator: string | RegExp): void;
+
+/**
  * Transforms all lines by replacing each line with the result of the callback
  * @param {CallbackTransformLine} callback The provided callback will be called for every line that comes from the previous action
  * @returns void
@@ -117,6 +124,7 @@ declare interface TextwandlerFunctions {
     jsonStringify: typeof jsonStringify;
     reduce: typeof reduce;
     setValue: typeof setValue;
+    split: typeof split;
     transformLine: typeof transformLine;
     unique: typeof unique;
 }

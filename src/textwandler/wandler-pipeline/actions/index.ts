@@ -4,5 +4,6 @@ export { ActionJsonParse } from './action-json-parse';
 export { ActionJsonStringify } from './action-json-stringify';
 export { ActionReduce } from './action-reduce';
 export { ActionSetValue } from './action-set-value';
+export { ActionSplit } from './action-split';
 export { ActionTransformLine } from './action-transform-line';
 export { ActionUnique } from './action-unique';

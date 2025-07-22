@@ -91,3 +91,30 @@ test('Action: unique', async ({ page }) => {
         `x\nz\n111\n222`
     );
 });
+
+test('Action: split - comma separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `split(',');`,
+        `apple,banana,cherry\ngrape,kiwi,mango`,
+        `apple\nbanana\ncherry\ngrape\nkiwi\nmango`
+    );
+});
+
+test('Action: split - regex whitespace', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `split(/\\s+/);`,
+        `hello   world\tfrom    split\naction   test`,
+        `hello\nworld\nfrom\nsplit\naction\ntest`
+    );
+});
+
+test('Action: split - pipe separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `split(' | ');`,
+        `first | second | third\nfourth | fifth`,
+        `first\nsecond\nthird\nfourth\nfifth`
+    );
+});
