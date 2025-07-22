@@ -87,6 +87,14 @@ declare function setValue(callback: typeof CallbackSetValue): void;
 declare function CallbackSetValue(input: string): string;
 
 /**
+ * Takes a subset of lines from the input, similar to Array.slice()
+ * @param {number} start The index to start the slice from (can be negative)
+ * @param {number} [end] The index to end the slice at (optional)
+ * @returns void
+ */
+declare function slice(start: number, end?: number): void;
+
+/**
  * Transforms all lines by replacing each line with the result of the callback
  * @param {CallbackTransformLine} callback The provided callback will be called for every line that comes from the previous action
  * @returns void
@@ -117,6 +125,7 @@ declare interface TextwandlerFunctions {
     jsonStringify: typeof jsonStringify;
     reduce: typeof reduce;
     setValue: typeof setValue;
+    slice: typeof slice;
     transformLine: typeof transformLine;
     unique: typeof unique;
 }

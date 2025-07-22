@@ -5,6 +5,7 @@ import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
+import { ActionSlice } from './actions/action-slice';
 import { ActionUnique } from './actions/action-unique';
 
 export type ActionRunStep = {
@@ -106,6 +107,9 @@ export class WandlerPipeline {
             },
             setValue: (transformFunction: (input: string) => string) => {
                 this.addAction(new ActionSetValue(transformFunction));
+            },
+            slice: (start: number, end?: number) => {
+                this.addAction(new ActionSlice(start, end));
             },
             transformLine: (
                 lineMapper: (line: string, lineNumber: number) => string

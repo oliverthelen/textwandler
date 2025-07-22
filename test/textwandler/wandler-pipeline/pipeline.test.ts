@@ -7,6 +7,7 @@ import {
     ActionJsonStringify,
     ActionJsonParse,
     WandlerPipeline,
+    ActionSlice,
     ActionUnique
 } from '../../../src/textwandler';
 
@@ -204,6 +205,40 @@ describe('Test of WandlerPipeline', () => {
           c
           1
           2"
+        `);
+    });
+
+    it('should execute slice action with start and end', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSlice(1, 3));
+
+        const result = pipeline.run('line0\nline1\nline2\nline3\nline4');
+        expect(result).toMatchInlineSnapshot(`
+          "line1
+          line2"
+        `);
+    });
+
+    it('should execute slice action with only start', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSlice(2));
+
+        const result = pipeline.run('line0\nline1\nline2\nline3\nline4');
+        expect(result).toMatchInlineSnapshot(`
+          "line2
+          line3
+          line4"
+        `);
+    });
+
+    it('should execute slice action with negative start', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSlice(-2));
+
+        const result = pipeline.run('line0\nline1\nline2\nline3\nline4');
+        expect(result).toMatchInlineSnapshot(`
+          "line3
+          line4"
         `);
     });
 });
