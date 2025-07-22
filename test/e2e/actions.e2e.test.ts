@@ -145,3 +145,30 @@ test('Action: append - file extension', async ({ page }) => {
         `file1.txt\nfile2.txt\nfile3.txt`
     );
 });
+
+test('Action: grep - string pattern', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep('error');`,
+        `info:starting\nerror:failed\nwarn:issue\nerror:timeout`,
+        `error:failed\nerror:timeout`
+    );
+});
+
+test('Action: grep - regex pattern', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep(/\\d+$/);`,
+        `lineendingwith123\ntextline\nanotherlinewith456\nmoretext`,
+        `lineendingwith123\nanotherlinewith456`
+    );
+});
+
+test('Action: grep - with invert flag', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep('error', true);`,
+        `info:starting\nerror:failed\nwarn:issue\nerror:timeout`,
+        `info:starting\nwarn:issue`
+    );
+});
