@@ -18,6 +18,28 @@ You can toggle between viewing the input and output as simple text or in a diff 
 
 These are the integrated functions to interact with the input content and generate the final output.
 
+### append
+
+Adds a suffix to the end of each line. Useful for adding file extensions, punctuation, or completion markers.
+
+```js
+function append(suffix: string): void
+```
+
+```js
+// Add checkmark to completed tasks
+append(' ✓');
+
+// Add semicolons to statements
+append(';');
+
+// Add file extensions
+append('.txt');
+
+// Add closing tags
+append('</li>');
+```
+
 ### filterLine
 
 Iterates over every line of the input and only keeps those lines for which the callback returns true.
@@ -31,6 +53,28 @@ function filterLine(callback: (lineContent: string, lineNumber: number) => boole
 filterLine((lineContent, lineNumber) => lineNumber % 2 === 0);
 ```
 
+### grep
+
+Filters lines matching a pattern, similar to the Unix grep command. Supports both string and regex patterns.
+
+```js
+function grep(pattern: string | RegExp, invert?: boolean): void
+```
+
+```js
+// Keep lines containing 'error'
+grep('error');
+
+// Keep lines starting with numbers
+grep(/^\d+/);
+
+// Keep lines that do NOT contain 'debug' (inverted match)
+grep('debug', true);
+
+// Case-insensitive search
+grep(/error/i);
+```
+
 ### transformLine
 
 Iterates over every line of the input and puts the result of the callback into the output in its place.
@@ -42,6 +86,30 @@ function transformLine(callback: (lineContent: string, lineNumber: number) => st
 ```js
 // Prefixes every line with the lineNumber
 transformLine((lineContent, lineNumber) => `${lineNumber} ${lineContent}`);
+```
+
+### trim
+
+Removes whitespace from the beginning and/or end of each line. Includes convenience methods for specific trimming.
+
+```js
+function trim(mode?: 'both' | 'start' | 'end'): void
+function trimStart(): void
+function trimEnd(): void
+```
+
+```js
+// Remove whitespace from both sides (default)
+trim();
+trim('both');
+
+// Remove whitespace from start only
+trim('start');
+trimStart();
+
+// Remove whitespace from end only
+trim('end');
+trimEnd();
 ```
 
 ### reduce
@@ -95,6 +163,28 @@ function unique(): void
 unique();
 ```
 
+### sort
+
+Sorts all lines using an optional comparator function. If no comparator is provided, lines are sorted alphabetically.
+
+```js
+function sort(callback?: (a: string, b: string) => number): void
+```
+
+```js
+// Sort lines alphabetically (default behavior)
+sort();
+
+// Sort lines in reverse alphabetical order
+sort((a, b) => b.localeCompare(a));
+
+// Sort lines numerically
+sort((a, b) => parseInt(a) - parseInt(b));
+
+// Sort lines by length
+sort((a, b) => a.length - b.length);
+```
+
 ### setValue
 
 Allows to set the whole output to the result of the callback which gets the results of the previous function chain as the input.
@@ -105,6 +195,28 @@ function setValue((input: string) => string): void
 
 ```js
 setValue(() => 'set the output to this string\nnext line');
+```
+
+### split
+
+Splits each line into multiple lines using a separator. Useful for processing CSV, pipe-delimited, or space-separated data.
+
+```js
+function split(separator: string | RegExp): void
+```
+
+```js
+// Split CSV lines
+split(',');
+
+// Split on any whitespace
+split(/\s+/);
+
+// Split pipe-delimited data
+split(' | ');
+
+// Split on semicolon
+split(';');
 ```
 
 ### jsonParse

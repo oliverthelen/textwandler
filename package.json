@@ -1,6 +1,6 @@
 {
     "name": "text-wandler",
-    "version": "1.5.13",
+    "version": "1.5.17",
     "description": "A crude local editor for transforming text input via JavaScript code",
     "main": "index.js",
     "type": "module",
@@ -44,7 +44,7 @@
         "@semantic-release/npm": "12.0.2",
         "@semantic-release/release-notes-generator": "14.0.3",
         "@types/lodash": "4.17.20",
-        "@types/node": "24.0.15",
+        "@types/node": "24.1.0",
         "copy-webpack-plugin": "13.0.0",
         "css-loader": "7.1.2",
         "favicons": "7.2.0",
