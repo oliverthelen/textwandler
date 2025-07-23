@@ -92,6 +92,105 @@ test('Action: unique', async ({ page }) => {
     );
 });
 
+test('Action: sort - default alphabetical', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `sort();`,
+        `zebra\napple\nbanana\ncherry`,
+        `apple\nbanana\ncherry\nzebra`
+    );
+});
+
+test('Action: sort - with comparator function', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `sort((a, b) => b.localeCompare(a));`,
+        `zebra\napple\nbanana\ncherry`,
+        `zebra\ncherry\nbanana\napple`
+    );
+});
+
+test('Action: sort - numeric sorting', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `sort((a, b) => parseInt(a) - parseInt(b));`,
+        `100\n2\n30\n1`,
+        `1\n2\n30\n100`
+    );
+});
+
+test('Action: append - checkmark suffix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append('✓');`,
+        `statement_one\nstatement_two\nstatement_three`,
+        `statement_one✓\nstatement_two✓\nstatement_three✓`
+    );
+});
+
+test('Action: append - semicolon suffix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append(';');`,
+        `statement_one\nstatement_two\nstatement_three`,
+        `statement_one;\nstatement_two;\nstatement_three;`
+    );
+});
+
+test('Action: append - file extension', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `append('.txt');`,
+        `file1\nfile2\nfile3`,
+        `file1.txt\nfile2.txt\nfile3.txt`
+    );
+});
+
+test('Action: grep - string pattern', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep('error');`,
+        `info:starting\nerror:failed\nwarn:issue\nerror:timeout`,
+        `error:failed\nerror:timeout`
+    );
+});
+
+test('Action: grep - regex pattern', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep(/\\d+$/);`,
+        `lineendingwith123\ntextline\nanotherlinewith456\nmoretext`,
+        `lineendingwith123\nanotherlinewith456`
+    );
+});
+
+test('Action: grep - with invert flag', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `grep('error', true);`,
+        `info:starting\nerror:failed\nwarn:issue\nerror:timeout`,
+        `info:starting\nwarn:issue`
+    );
+});
+
+test('Action: split - comma separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `split(',');`,
+        `apple,banana,cherry\ngrape,kiwi,mango`,
+        `apple\nbanana\ncherry\ngrape\nkiwi\nmango`
+    );
+});
+
+test('Action: split - pipe separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `split('|');`,
+        `first|second|third\nfourth|fifth`,
+        `first\nsecond\nthird\nfourth\nfifth`
+    );
+});
+
 test('Action: trim - both sides', async ({ page }) => {
     await testEditorContent(
         page,
