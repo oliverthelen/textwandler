@@ -280,3 +280,30 @@ test('Action: reverse', async ({ page }) => {
         `fourth\nthird\nsecond\nfirst`
     );
 });
+
+test('Action: replace - string replacement', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `replace('old', 'new');`,
+        `oldtext\noldvalue\nkeepthisoldword`,
+        `newtext\nnewvalue\nkeepthisnewword`
+    );
+});
+
+test('Action: replace - with regex', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `replace(/\\d+/g, 'NUMBER');`,
+        `line123\nvalue456\nnumbershere`,
+        `lineNUMBER\nvalueNUMBER\nnumbershere`
+    );
+});
+
+test('Action: replace - case insensitive', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `replace('hello', 'hi', 'gi');`,
+        `Helloworld\nhellothere\nHELLOeveryone`,
+        `hiworld\nhithere\nhieveryone`
+    );
+});

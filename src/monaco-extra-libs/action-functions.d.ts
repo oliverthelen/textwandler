@@ -94,6 +94,19 @@ declare function CallbackReduce(
 ): any;
 
 /**
+ * Replaces text across all lines using string or regex patterns
+ * @param {string | RegExp} searchValue The string or regex pattern to search for
+ * @param {string} replaceValue The replacement string
+ * @param {string} [flags] Optional flags for string replacement (e.g., 'gi' for global case-insensitive)
+ * @returns void
+ */
+declare function replace(
+    searchValue: string | RegExp,
+    replaceValue: string,
+    flags?: string
+): void;
+
+/**
  * Reverses the order of all lines
  * @returns void
  */
@@ -196,6 +209,7 @@ declare interface TextwandlerFunctions {
     jsonStringify: typeof jsonStringify;
     prepend: typeof prepend;
     reduce: typeof reduce;
+    replace: typeof replace;
     reverse: typeof reverse;
     setValue: typeof setValue;
     slice: typeof slice;

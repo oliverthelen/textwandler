@@ -6,6 +6,7 @@ export { ActionJsonParse } from './action-json-parse';
 export { ActionJsonStringify } from './action-json-stringify';
 export { ActionPrepend } from './action-prepend';
 export { ActionReduce } from './action-reduce';
+export { ActionReplace } from './action-replace';
 export { ActionReverse } from './action-reverse';
 export { ActionSetValue } from './action-set-value';
 export { ActionSlice } from './action-slice';

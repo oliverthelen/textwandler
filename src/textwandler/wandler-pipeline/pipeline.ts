@@ -9,6 +9,7 @@ import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
 import { ActionPrepend } from './actions/action-prepend';
 import { ActionSlice } from './actions/action-slice';
+import { ActionReplace } from './actions/action-replace';
 import { ActionReverse } from './actions/action-reverse';
 import { ActionSort } from './actions/action-sort';
 import { ActionSplit } from './actions/action-split';
@@ -120,6 +121,15 @@ export class WandlerPipeline {
                 initialValue: any
             ) => {
                 this.addAction(new ActionReduce(reduceFunction, initialValue));
+            },
+            replace: (
+                searchValue: string | RegExp,
+                replaceValue: string,
+                flags?: string
+            ) => {
+                this.addAction(
+                    new ActionReplace(searchValue, replaceValue, flags)
+                );
             },
             reverse: () => {
                 this.addAction(new ActionReverse());
