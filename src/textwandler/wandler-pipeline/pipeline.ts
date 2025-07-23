@@ -1,11 +1,20 @@
 import { Action, ActionResult } from './actions/action';
+import { ActionAppend } from './actions/action-append';
 import { ActionTransformLine } from './actions/action-transform-line';
 import { ActionFilterLine } from './actions/action-filter-line';
+import { ActionGrep } from './actions/action-grep';
 import { ActionJoin } from './actions/action-join';
 import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
+import { ActionPrepend } from './actions/action-prepend';
+import { ActionSlice } from './actions/action-slice';
+import { ActionReplace } from './actions/action-replace';
+import { ActionReverse } from './actions/action-reverse';
+import { ActionSort } from './actions/action-sort';
+import { ActionSplit } from './actions/action-split';
+import { ActionTrim } from './actions/action-trim';
 import { ActionUnique } from './actions/action-unique';
 
 export type ActionRunStep = {
@@ -78,10 +87,16 @@ export class WandlerPipeline {
 
     public getActionsForContext() {
         const functions = {
+            append: (suffix: string) => {
+                this.addAction(new ActionAppend(suffix));
+            },
             filterLine: (
                 lineMapper: (line: string, lineNumber: number) => boolean
             ) => {
                 this.addAction(new ActionFilterLine(lineMapper));
+            },
+            grep: (pattern: string | RegExp, invert?: boolean) => {
+                this.addAction(new ActionGrep(pattern, invert));
             },
             jsonParse: (
                 transformJsonFunction: (
@@ -97,6 +112,9 @@ export class WandlerPipeline {
             },
             jsonStringify: (indentation?: number) =>
                 this.addAction(new ActionJsonStringify(indentation)),
+            prepend: (prefix: string) => {
+                this.addAction(new ActionPrepend(prefix));
+            },
             reduce: (
                 reduceFunction: (
                     result: string,
@@ -108,13 +126,43 @@ export class WandlerPipeline {
             ) => {
                 this.addAction(new ActionReduce(reduceFunction, initialValue));
             },
+            replace: (
+                searchValue: string | RegExp,
+                replaceValue: string,
+                flags?: string
+            ) => {
+                this.addAction(
+                    new ActionReplace(searchValue, replaceValue, flags)
+                );
+            },
+            reverse: () => {
+                this.addAction(new ActionReverse());
+            },
             setValue: (transformFunction: (input: string) => string) => {
                 this.addAction(new ActionSetValue(transformFunction));
+            },
+            slice: (start: number, end?: number) => {
+                this.addAction(new ActionSlice(start, end));
+            },
+            sort: (transformFunction?: (a: string, b: string) => number) => {
+                this.addAction(new ActionSort(transformFunction));
+            },
+            split: (separator: string | RegExp) => {
+                this.addAction(new ActionSplit(separator));
             },
             transformLine: (
                 lineMapper: (line: string, lineNumber: number) => string
             ) => {
                 this.addAction(new ActionTransformLine(lineMapper));
+            },
+            trim: (mode?: 'both' | 'start' | 'end') => {
+                this.addAction(new ActionTrim(mode));
+            },
+            trimStart: () => {
+                this.addAction(new ActionTrim('start'));
+            },
+            trimEnd: () => {
+                this.addAction(new ActionTrim('end'));
             },
             unique: () => {
                 this.addAction(new ActionUnique());
