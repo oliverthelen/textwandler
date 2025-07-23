@@ -10,6 +10,7 @@ import {
     ActionJsonParse,
     WandlerPipeline,
     ActionSort,
+    ActionSplit,
     ActionUnique
 } from '../../../src/textwandler';
 
@@ -323,6 +324,52 @@ describe('Test of WandlerPipeline', () => {
         expect(result).toMatchInlineSnapshot(`
           "info: starting
           warn: issue"
+        `);
+    });
+
+    it('should execute split action with comma separator', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSplit(','));
+
+        const result = pipeline.run('apple,banana,cherry\ngrape,kiwi,mango');
+        expect(result).toMatchInlineSnapshot(`
+          "apple
+          banana
+          cherry
+          grape
+          kiwi
+          mango"
+        `);
+    });
+
+    it('should execute split action with regex separator', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSplit(/\s+/));
+
+        const result = pipeline.run(
+            'hello   world\tfrom    split\naction   test'
+        );
+        expect(result).toMatchInlineSnapshot(`
+          "hello
+          world
+          from
+          split
+          action
+          test"
+        `);
+    });
+
+    it('should execute split action with pipe separator', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionSplit(' | '));
+
+        const result = pipeline.run('first | second | third\nfourth | fifth');
+        expect(result).toMatchInlineSnapshot(`
+          "first
+          second
+          third
+          fourth
+          fifth"
         `);
     });
 });

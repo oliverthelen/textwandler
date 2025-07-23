@@ -160,6 +160,28 @@ function setValue((input: string) => string): void
 setValue(() => 'set the output to this string\nnext line');
 ```
 
+### split
+
+Splits each line into multiple lines using a separator. Useful for processing CSV, pipe-delimited, or space-separated data.
+
+```js
+function split(separator: string | RegExp): void
+```
+
+```js
+// Split CSV lines
+split(',');
+
+// Split on any whitespace
+split(/\s+/);
+
+// Split pipe-delimited data
+split(' | ');
+
+// Split on semicolon
+split(';');
+```
+
 ### jsonParse
 
 Parses the input as a json object or array and allows the manipulation in the callback.

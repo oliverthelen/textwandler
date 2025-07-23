@@ -172,3 +172,21 @@ test('Action: grep - with invert flag', async ({ page }) => {
         `info:starting\nwarn:issue`
     );
 });
+
+test('Action: split - comma separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `split(',');`,
+        `apple,banana,cherry\ngrape,kiwi,mango`,
+        `apple\nbanana\ncherry\ngrape\nkiwi\nmango`
+    );
+});
+
+test('Action: split - pipe separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `split('|');`,
+        `first|second|third\nfourth|fifth`,
+        `first\nsecond\nthird\nfourth\nfifth`
+    );
+});

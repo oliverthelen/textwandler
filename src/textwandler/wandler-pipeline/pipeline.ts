@@ -8,6 +8,7 @@ import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
 import { ActionSort } from './actions/action-sort';
+import { ActionSplit } from './actions/action-split';
 import { ActionUnique } from './actions/action-unique';
 
 export type ActionRunStep = {
@@ -118,6 +119,9 @@ export class WandlerPipeline {
             },
             sort: (transformFunction?: (a: string, b: string) => number) => {
                 this.addAction(new ActionSort(transformFunction));
+            },
+            split: (separator: string | RegExp) => {
+                this.addAction(new ActionSplit(separator));
             },
             transformLine: (
                 lineMapper: (line: string, lineNumber: number) => string
