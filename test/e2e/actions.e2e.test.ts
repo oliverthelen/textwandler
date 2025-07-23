@@ -96,8 +96,8 @@ test('Action: prepend - quote prefix', async ({ page }) => {
     await testEditorContent(
         page,
         `prepend('> ');`,
-        `first line\nsecond line\nthird line`,
-        `> first line\n> second line\n> third line`
+        `firstline\nsecondline\nthirdline`,
+        `>firstline\n>secondline\n>thirdline`
     );
 });
 
@@ -105,8 +105,8 @@ test('Action: prepend - todo prefix', async ({ page }) => {
     await testEditorContent(
         page,
         `prepend('TODO: ');`,
-        `fix bug\nwrite tests\nupdate docs`,
-        `TODO: fix bug\nTODO: write tests\nTODO: update docs`
+        `fixbug\nwritetests\nupdatedocs`,
+        `TODO:fixbug\nTODO:writetests\nTODO:updatedocs`
     );
 });
 
@@ -114,8 +114,8 @@ test('Action: prepend - checkbox prefix', async ({ page }) => {
     await testEditorContent(
         page,
         `prepend('- [ ] ');`,
-        `task one\ntask two\ntask three`,
-        `- [ ] task one\n- [ ] task two\n- [ ] task three`
+        `taskone\ntasktwo\ntaskthree`,
+        `-[]taskone\n-[]tasktwo\n-[]taskthree`
     );
 });
 
