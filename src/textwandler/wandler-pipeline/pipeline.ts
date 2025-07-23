@@ -9,6 +9,7 @@ import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
 import { ActionSort } from './actions/action-sort';
 import { ActionSplit } from './actions/action-split';
+import { ActionTrim } from './actions/action-trim';
 import { ActionUnique } from './actions/action-unique';
 
 export type ActionRunStep = {
@@ -127,6 +128,15 @@ export class WandlerPipeline {
                 lineMapper: (line: string, lineNumber: number) => string
             ) => {
                 this.addAction(new ActionTransformLine(lineMapper));
+            },
+            trim: (mode?: 'both' | 'start' | 'end') => {
+                this.addAction(new ActionTrim(mode));
+            },
+            trimStart: () => {
+                this.addAction(new ActionTrim('start'));
+            },
+            trimEnd: () => {
+                this.addAction(new ActionTrim('end'));
             },
             unique: () => {
                 this.addAction(new ActionUnique());

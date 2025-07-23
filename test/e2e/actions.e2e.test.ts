@@ -190,3 +190,30 @@ test('Action: split - pipe separator', async ({ page }) => {
         `first\nsecond\nthird\nfourth\nfifth`
     );
 });
+
+test.skip('Action: trim - both sides', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `trim();`,
+        `  line1  \n\t\tline2\t\t\n   line3   `,
+        `line1\nline2\nline3`
+    );
+});
+
+test.skip('Action: trimStart - left side only', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `trimStart();`,
+        `  line1  \n\t\tline2\t\t\n   line3   `,
+        `line1  \nline2\t\t\nline3   `
+    );
+});
+
+test.skip('Action: trimEnd - right side only', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `trimEnd();`,
+        `  line1  \n\t\tline2\t\t\n   line3   `,
+        `  line1\n\t\tline2\n   line3`
+    );
+});

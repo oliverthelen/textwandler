@@ -11,6 +11,7 @@ import {
     WandlerPipeline,
     ActionSort,
     ActionSplit,
+    ActionTrim,
     ActionUnique
 } from '../../../src/textwandler';
 
@@ -370,6 +371,42 @@ describe('Test of WandlerPipeline', () => {
           third
           fourth
           fifth"
+        `);
+    });
+
+    it('should execute trim action with both sides', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionTrim('both'));
+
+        const result = pipeline.run('  line1  \n\t\tline2\t\t\n   line3   ');
+        expect(result).toMatchInlineSnapshot(`
+          "line1
+          line2
+          line3"
+        `);
+    });
+
+    it('should execute trim action with start only', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionTrim('start'));
+
+        const result = pipeline.run('  line1  \n\t\tline2\t\t\n   line3   ');
+        expect(result).toMatchInlineSnapshot(`
+          "line1  
+          line2\t\t
+          line3   "
+        `);
+    });
+
+    it('should execute trim action with end only', () => {
+        const pipeline = new WandlerPipeline();
+        pipeline.addAction(new ActionTrim('end'));
+
+        const result = pipeline.run('  line1  \n\t\tline2\t\t\n   line3   ');
+        expect(result).toMatchInlineSnapshot(`
+          "  line1
+          \t\tline2
+             line3"
         `);
     });
 });

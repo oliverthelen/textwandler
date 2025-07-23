@@ -143,6 +143,25 @@ declare function CallbackTransformLine(
 ): string;
 
 /**
+ * Removes whitespace from the beginning and/or end of each line
+ * @param {'both' | 'start' | 'end'} [mode='both'] Which whitespace to trim
+ * @returns void
+ */
+declare function trim(mode?: 'both' | 'start' | 'end'): void;
+
+/**
+ * Removes whitespace from the beginning of each line
+ * @returns void
+ */
+declare function trimStart(): void;
+
+/**
+ * Removes whitespace from the end of each line
+ * @returns void
+ */
+declare function trimEnd(): void;
+
+/**
  * Filters all lines and leaves only unique ones as a result for the next stage
  * @returns void
  */
@@ -159,6 +178,9 @@ declare interface TextwandlerFunctions {
     sort: typeof sort;
     split: typeof split;
     transformLine: typeof transformLine;
+    trim: typeof trim;
+    trimStart: typeof trimStart;
+    trimEnd: typeof trimEnd;
     unique: typeof unique;
 }
 

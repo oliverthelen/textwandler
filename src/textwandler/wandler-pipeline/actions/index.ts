@@ -9,4 +9,5 @@ export { ActionSetValue } from './action-set-value';
 export { ActionSort } from './action-sort';
 export { ActionSplit } from './action-split';
 export { ActionTransformLine } from './action-transform-line';
+export { ActionTrim } from './action-trim';
 export { ActionUnique } from './action-unique';
