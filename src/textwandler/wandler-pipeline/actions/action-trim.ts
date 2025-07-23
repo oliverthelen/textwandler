@@ -9,7 +9,7 @@ export class ActionTrim extends Action {
 
     run(input: ActionResult): ActionResult {
         const lines = input.text.split(/\n/);
-        const trimmedLines = lines.map(line => {
+        const trimmedLines = lines.map((line) => {
             switch (this.mode) {
                 case 'start':
                     return line.trimStart();
@@ -20,7 +20,7 @@ export class ActionTrim extends Action {
                     return line.trim();
             }
         });
-        
+
         input.text = trimmedLines.join('\n');
         return input;
     }

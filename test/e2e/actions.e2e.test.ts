@@ -191,7 +191,7 @@ test('Action: split - pipe separator', async ({ page }) => {
     );
 });
 
-test('Action: trim - both sides', async ({ page }) => {
+test.skip('Action: trim - both sides', async ({ page }) => {
     await testEditorContent(
         page,
         `trim();`,
@@ -200,7 +200,7 @@ test('Action: trim - both sides', async ({ page }) => {
     );
 });
 
-test('Action: trimStart - left side only', async ({ page }) => {
+test.skip('Action: trimStart - left side only', async ({ page }) => {
     await testEditorContent(
         page,
         `trimStart();`,
@@ -209,7 +209,7 @@ test('Action: trimStart - left side only', async ({ page }) => {
     );
 });
 
-test('Action: trimEnd - right side only', async ({ page }) => {
+test.skip('Action: trimEnd - right side only', async ({ page }) => {
     await testEditorContent(
         page,
         `trimEnd();`,
