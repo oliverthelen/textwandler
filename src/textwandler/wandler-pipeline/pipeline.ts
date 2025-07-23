@@ -1,10 +1,13 @@
 import { Action, ActionResult } from './actions/action';
+import { ActionAppend } from './actions/action-append';
 import { ActionTransformLine } from './actions/action-transform-line';
 import { ActionFilterLine } from './actions/action-filter-line';
+import { ActionGrep } from './actions/action-grep';
 import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
+import { ActionSort } from './actions/action-sort';
 import { ActionSplit } from './actions/action-split';
 import { ActionUnique } from './actions/action-unique';
 
@@ -78,10 +81,16 @@ export class WandlerPipeline {
 
     public getActionsForContext() {
         const functions = {
+            append: (suffix: string) => {
+                this.addAction(new ActionAppend(suffix));
+            },
             filterLine: (
                 lineMapper: (line: string, lineNumber: number) => boolean
             ) => {
                 this.addAction(new ActionFilterLine(lineMapper));
+            },
+            grep: (pattern: string | RegExp, invert?: boolean) => {
+                this.addAction(new ActionGrep(pattern, invert));
             },
             jsonParse: (
                 transformJsonFunction: (
@@ -107,6 +116,9 @@ export class WandlerPipeline {
             },
             setValue: (transformFunction: (input: string) => string) => {
                 this.addAction(new ActionSetValue(transformFunction));
+            },
+            sort: (transformFunction?: (a: string, b: string) => number) => {
+                this.addAction(new ActionSort(transformFunction));
             },
             split: (separator: string | RegExp) => {
                 this.addAction(new ActionSplit(separator));

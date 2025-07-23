@@ -1,4 +1,11 @@
 /**
+ * Adds a suffix to the end of each line
+ * @param {string} suffix The string to append to each line
+ * @returns void
+ */
+declare function append(suffix: string): void;
+
+/**
  * Filters out lines from the output of the previous action if the given callback returns true for a line
  * @param {CallbackFilterLine} callback The provided callback will be called for every line that comes from the previous action
  * @returns void
@@ -16,6 +23,14 @@ declare function CallbackFilterLine(
     lineContent: string,
     lineNumber: number
 ): boolean;
+
+/**
+ * Filters lines matching a pattern (similar to Unix grep command)
+ * @param {string | RegExp} pattern The string or regex pattern to search for
+ * @param {boolean} [invert=false] If true, returns lines that do NOT match the pattern
+ * @returns void
+ */
+declare function grep(pattern: string | RegExp, invert?: boolean): void;
 
 /**
  * Parses the output of the previous action to a json object and gives it to the provided callback
@@ -87,6 +102,21 @@ declare function setValue(callback: typeof CallbackSetValue): void;
 declare function CallbackSetValue(input: string): string;
 
 /**
+ * Sorts all lines using an optional comparator function
+ * @param {CallbackSort} [callback] Optional comparator function for custom sorting. If not provided, lines are sorted alphabetically
+ * @returns void
+ */
+declare function sort(callback?: typeof CallbackSort): void;
+
+/**
+ * Comparator function for sorting lines
+ * @param {string} a The first line to compare
+ * @param {string} b The second line to compare
+ * @returns number A negative value if a should come before b, positive if a should come after b, or zero if they are equal
+ */
+declare function CallbackSort(a: string, b: string): number;
+
+/**
  * Splits each line into multiple lines using a separator
  * @param {string | RegExp} separator The separator to split on (string or regex)
  * @returns void
@@ -119,11 +149,14 @@ declare function CallbackTransformLine(
 declare function unique(): void;
 
 declare interface TextwandlerFunctions {
+    append: typeof append;
     filterLine: typeof filterLine;
+    grep: typeof grep;
     jsonParse: typeof jsonParse;
     jsonStringify: typeof jsonStringify;
     reduce: typeof reduce;
     setValue: typeof setValue;
+    sort: typeof sort;
     split: typeof split;
     transformLine: typeof transformLine;
     unique: typeof unique;
