@@ -92,6 +92,33 @@ test('Action: unique', async ({ page }) => {
     );
 });
 
+test('Action: prepend - quote prefix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `prepend('> ');`,
+        `firstline\nsecondline\nthirdline`,
+        `>firstline\n>secondline\n>thirdline`
+    );
+});
+
+test('Action: prepend - todo prefix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `prepend('TODO: ');`,
+        `fixbug\nwritetests\nupdatedocs`,
+        `TODO:fixbug\nTODO:writetests\nTODO:updatedocs`
+    );
+});
+
+test('Action: prepend - checkbox prefix', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `prepend('- [ ] ');`,
+        `taskone\ntasktwo\ntaskthree`,
+        `-[]taskone\n-[]tasktwo\n-[]taskthree`
+    );
+});
+
 test('Action: slice - with start and end', async ({ page }) => {
     await testEditorContent(
         page,

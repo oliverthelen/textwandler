@@ -4,6 +4,7 @@ export { ActionFilterLine } from './action-filter-line';
 export { ActionGrep } from './action-grep';
 export { ActionJsonParse } from './action-json-parse';
 export { ActionJsonStringify } from './action-json-stringify';
+export { ActionPrepend } from './action-prepend';
 export { ActionReduce } from './action-reduce';
 export { ActionReverse } from './action-reverse';
 export { ActionSetValue } from './action-set-value';

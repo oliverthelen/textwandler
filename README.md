@@ -197,6 +197,28 @@ function setValue((input: string) => string): void
 setValue(() => 'set the output to this string\nnext line');
 ```
 
+### prepend
+
+Adds a prefix to the beginning of each line. Useful for creating quotes, todos, or formatted lists.
+
+```js
+function prepend(prefix: string): void
+```
+
+```js
+// Add quote prefix
+prepend('> ');
+
+// Add TODO prefix
+prepend('TODO: ');
+
+// Add checkbox prefix
+prepend('- [ ] ');
+
+// Add line numbers (static)
+prepend('001: ');
+```
+
 ### slice
 
 Takes a subset of lines from the input, similar to Array.slice(). Supports negative indices.

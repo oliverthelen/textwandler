@@ -44,6 +44,13 @@ declare function jsonParse(
 ): void;
 
 /**
+ * Adds a prefix to the beginning of each line
+ * @param {string} prefix The string to prepend to each line
+ * @returns void
+ */
+declare function prepend(prefix: string): void;
+
+/**
  * Callback that will be called with the parsed json from the output of the previous action.
  * The resulting object will be automatically given to an instance of the JsonStringify action
  * @param {Record<string, unknown>} json A json object parsed from the output of the previous action
@@ -187,6 +194,7 @@ declare interface TextwandlerFunctions {
     grep: typeof grep;
     jsonParse: typeof jsonParse;
     jsonStringify: typeof jsonStringify;
+    prepend: typeof prepend;
     reduce: typeof reduce;
     reverse: typeof reverse;
     setValue: typeof setValue;
