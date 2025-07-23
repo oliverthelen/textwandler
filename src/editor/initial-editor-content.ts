@@ -1,30 +1,54 @@
-export const INITIAL_EDITOR_CONTENT = `// Welcome to this crude JavaScript text editor! This editor empowers you to transform text using short, user-editable
-// JavaScript functions. For the times you just need to quickly transform a text with a familiar setup :)
+export const INITIAL_EDITOR_CONTENT = `// 🪄 Welcome to TextWandler! Transform your text with JavaScript magic ✨
+// 
+// Chain powerful text transformation functions together to process your input.
+// Try the examples below or create your own combinations!
 
-// Usage examples:
+// 🎯 Quick Examples - Uncomment any line to try:
 
-//// Use lodash
-//setValue((input) => \`\${ input } -> \${ _.random(0, 100) }\`)
+// Add line numbers to each line
+// transformLine((line, num) => \`\${num + 1}. \${line}\`);
 
-//// Filter all lines via a callback  
-// filterLine((lineContent, lineNumber) => lineNumber % 2 === 0);
+// Convert to TODO list  
+// prepend('- [ ] ');
 
-//// Reduce lines
+// Create CSV from lines
+// join(', ');
+
+// Filter out empty lines
+// grep(/\\S/);
+
+// Sort alphabetically
+// sort();
+
+// Remove duplicates
+// unique();
+
+// Transform case and add prefix
+// transformLine(line => \`LOG: \${line.toUpperCase()}\`);
+
+// Complex chain example: clean data and format
 /*
-reduce((result, line) => {
-    if(parseInt(line)) {
-        result += parseInt(line);
-    }
-
-    return result;
-}, 0);
+trim();                    // Remove whitespace
+filterLine(line => line);  // Remove empty lines  
+unique();                  // Remove duplicates
+sort();                    // Sort alphabetically
+prepend('• ');            // Add bullet points
 */
 
-//// Transform all lines via a callback  
-transformLine((lineContent, lineNumber) => lineContent + lineNumber);
+// 💡 Try editing the input text on the left, then run your transformation!
+// 📚 Check the documentation for all available functions
 
-// All available functions are also exported with the wrappers textwandler and tw
-// So tw.transformLine() will work the same way transformLine() by itself works
+transformLine((line, num) => \`\${num + 1}. \${line}\`);
 `;
 
-export const INITIAL_INPUT_CONTENT = 'a\nb\nc';
+export const INITIAL_INPUT_CONTENT = `Write documentation
+Fix bug in login
+Update dependencies
+Write documentation
+Add unit tests
+Add unit tests
+
+Review pull request
+Deploy to production
+Fix bug in login
+Update README`;
