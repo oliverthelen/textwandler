@@ -9,7 +9,7 @@ export class ActionPrepend extends Action {
 
     run(input: ActionResult): ActionResult {
         const lines = input.text.split(/\n/);
-        const prependedLines = lines.map(line => this.prefix + line);
+        const prependedLines = lines.map((line) => this.prefix + line);
         input.text = prependedLines.join('\n');
         return input;
     }
