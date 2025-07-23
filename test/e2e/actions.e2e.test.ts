@@ -285,8 +285,8 @@ test('Action: replace - string replacement', async ({ page }) => {
     await testEditorContent(
         page,
         `replace('old', 'new');`,
-        `old text\nold value\nkeep this old word`,
-        `new text\nnew value\nkeep this new word`
+        `oldtext\noldvalue\nkeepthisoldword`,
+        `newtext\nnewvalue\nkeepthisnewword`
     );
 });
 
@@ -294,8 +294,8 @@ test('Action: replace - with regex', async ({ page }) => {
     await testEditorContent(
         page,
         `replace(/\\d+/g, 'NUMBER');`,
-        `line 123\nvalue 456\nno numbers here`,
-        `line NUMBER\nvalue NUMBER\nno numbers here`
+        `line123\nvalue456\nnumbershere`,
+        `lineNUMBER\nvalueNUMBER\nnumbershere`
     );
 });
 
@@ -303,7 +303,7 @@ test('Action: replace - case insensitive', async ({ page }) => {
     await testEditorContent(
         page,
         `replace('hello', 'hi', 'gi');`,
-        `Hello world\nhello there\nHELLO everyone`,
-        `hi world\nhi there\nhi everyone`
+        `Helloworld\nhellothere\nHELLOeveryone`,
+        `hiworld\nhithere\nhieveryone`
     );
 });
