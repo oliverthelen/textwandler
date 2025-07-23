@@ -307,3 +307,30 @@ test('Action: replace - case insensitive', async ({ page }) => {
         `hiworld\nhithere\nhieveryone`
     );
 });
+
+test('Action: join - comma separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `join(', ');`,
+        `apple\nbanana\ncherry\ndate`,
+        `apple,banana,cherry,date`
+    );
+});
+
+test('Action: join - pipe separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `join(' | ');`,
+        `first\nsecond\nthird`,
+        `first|second|third`
+    );
+});
+
+test('Action: join - space separator', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `join(' ');`,
+        `one\ntwo\nthree\nfour`,
+        `onetwothreefour`
+    );
+});

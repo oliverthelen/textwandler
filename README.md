@@ -18,6 +18,27 @@ You can toggle between viewing the input and output as simple text or in a diff 
 
 These are the integrated functions to interact with the input content and generate the final output.
 
+### Actions Quick Reference
+
+| Action                          | Description                                          |
+| ------------------------------- | ---------------------------------------------------- |
+| [append](#append)               | Adds a suffix to the end of each line                |
+| [filterLine](#filterline)       | Keeps only lines that match a condition              |
+| [grep](#grep)                   | Filters lines matching a pattern (like Unix grep)    |
+| [join](#join)                   | Joins all lines with a specified separator           |
+| [jsonParse](#jsonparse)         | Parses and manipulates JSON data                     |
+| [prepend](#prepend)             | Adds a prefix to the beginning of each line          |
+| [reduce](#reduce)               | Reduces all lines to a single output value           |
+| [replace](#replace)             | Replaces text using string or regex patterns         |
+| [reverse](#reverse)             | Reverses the order of all lines                      |
+| [setValue](#setvalue)           | Sets the entire output to a custom value             |
+| [slice](#slice)                 | Takes a subset of lines from the input               |
+| [sort](#sort)                   | Sorts lines alphabetically or with custom comparator |
+| [split](#split)                 | Splits each line into multiple lines                 |
+| [transformLine](#transformline) | Transforms each line using a callback function       |
+| [trim](#trim)                   | Removes whitespace from lines                        |
+| [unique](#unique)               | Removes duplicate lines                              |
+
 ### append
 
 Adds a suffix to the end of each line. Useful for adding file extensions, punctuation, or completion markers.
@@ -75,41 +96,69 @@ grep('debug', true);
 grep(/error/i);
 ```
 
-### transformLine
+### join
 
-Iterates over every line of the input and puts the result of the callback into the output in its place.
+Joins all lines with a specified separator. Useful for converting multi-line text to single line or custom formats.
 
 ```js
-function transformLine(callback: (lineContent: string, lineNumber: number) => string): void
+function join(separator?: string): void
 ```
 
 ```js
-// Prefixes every line with the lineNumber
-transformLine((lineContent, lineNumber) => `${lineNumber} ${lineContent}`);
+// Join lines with comma and space
+join(', ');
+
+// Join lines with pipe separator
+join(' | ');
+
+// Join lines with just space
+join(' ');
+
+// Default behavior (keeps newlines)
+join();
 ```
 
-### trim
+### jsonParse
 
-Removes whitespace from the beginning and/or end of each line. Includes convenience methods for specific trimming.
+Parses the input as a json object or array and allows the manipulation in the callback.
+Result of the callback must be a json object or array again.
 
 ```js
-function trim(mode?: 'both' | 'start' | 'end'): void
-function trimStart(): void
-function trimEnd(): void
+function jsonParse((input: object | array) => object | array): void
 ```
 
 ```js
-// Remove whitespace from both sides (default)
-trim();
-trim('both');
+// Assumes as input an object like: {"a": 123}
+jsonParse((json) => {
+    json.a++;
+    return json;
+});
+// Output will be:
+// {
+//    "a": 124
+// }
+```
 
-// Remove whitespace from start only
-trim('start');
-trimStart();
+### prepend
 
-// Remove whitespace from end only
-trim('end');
-trimEnd();
+Adds a prefix to the beginning of each line. Useful for creating quotes, todos, or formatted lists.
+
+```js
+function prepend(prefix: string): void
+```
+
+```js
+// Add quote prefix
+prepend('> ');
+
+// Add TODO prefix
+prepend('TODO: ');
+
+// Add checkbox prefix
+prepend('- [ ] ');
+
+// Add line numbers (static)
+prepend('001: ');
 ```
 
 ### reduce
@@ -173,16 +222,35 @@ function reverse(): void
 reverse();
 ```
 
-### unique
+### setValue
 
-Filters all lines and leaves only unique ones as a result for the next stage
+Allows to set the whole output to the result of the callback which gets the results of the previous function chain as the input.
 
 ```js
-function unique(): void
+function setValue((input: string) => string): void
 ```
 
 ```js
-unique();
+setValue(() => 'set the output to this string\nnext line');
+```
+
+### slice
+
+Takes a subset of lines from the input, similar to Array.slice(). Supports negative indices.
+
+```js
+function slice(start: number, end?: number): void
+```
+
+```js
+// Take lines 1-3 (indices 1 and 2)
+slice(1, 3);
+
+// Take from line 2 to the end
+slice(2);
+
+// Take the last 3 lines
+slice(-3);
 ```
 
 ### sort
@@ -207,59 +275,6 @@ sort((a, b) => parseInt(a) - parseInt(b));
 sort((a, b) => a.length - b.length);
 ```
 
-### setValue
-
-Allows to set the whole output to the result of the callback which gets the results of the previous function chain as the input.
-
-```js
-function setValue((input: string) => string): void
-```
-
-```js
-setValue(() => 'set the output to this string\nnext line');
-```
-
-### prepend
-
-Adds a prefix to the beginning of each line. Useful for creating quotes, todos, or formatted lists.
-
-```js
-function prepend(prefix: string): void
-```
-
-```js
-// Add quote prefix
-prepend('> ');
-
-// Add TODO prefix
-prepend('TODO: ');
-
-// Add checkbox prefix
-prepend('- [ ] ');
-
-// Add line numbers (static)
-prepend('001: ');
-```
-
-### slice
-
-Takes a subset of lines from the input, similar to Array.slice(). Supports negative indices.
-
-```js
-function slice(start: number, end?: number): void
-```
-
-```js
-// Take lines 1-3 (indices 1 and 2)
-slice(1, 3);
-
-// Take from line 2 to the end
-slice(2);
-
-// Take the last 3 lines
-slice(-3);
-```
-
 ### split
 
 Splits each line into multiple lines using a separator. Useful for processing CSV, pipe-delimited, or space-separated data.
@@ -282,25 +297,53 @@ split(' | ');
 split(';');
 ```
 
-### jsonParse
+### transformLine
 
-Parses the input as a json object or array and allows the manipulation in the callback.
-Result of the callback must be a json object or array again.
+Iterates over every line of the input and puts the result of the callback into the output in its place.
 
 ```js
-function jsonParse((input: object | array) => object | array): void
+function transformLine(callback: (lineContent: string, lineNumber: number) => string): void
 ```
 
 ```js
-// Assumes as input an object like: {"a": 123}
-jsonParse((json) => {
-    json.a++;
-    return json;
-});
-// Output will be:
-// {
-//    "a": 124
-// }
+// Prefixes every line with the lineNumber
+transformLine((lineContent, lineNumber) => `${lineNumber} ${lineContent}`);
+```
+
+### trim
+
+Removes whitespace from the beginning and/or end of each line. Includes convenience methods for specific trimming.
+
+```js
+function trim(mode?: 'both' | 'start' | 'end'): void
+function trimStart(): void
+function trimEnd(): void
+```
+
+```js
+// Remove whitespace from both sides (default)
+trim();
+trim('both');
+
+// Remove whitespace from start only
+trim('start');
+trimStart();
+
+// Remove whitespace from end only
+trim('end');
+trimEnd();
+```
+
+### unique
+
+Filters all lines and leaves only unique ones as a result for the next stage
+
+```js
+function unique(): void
+```
+
+```js
+unique();
 ```
 
 ## Chaining of functions

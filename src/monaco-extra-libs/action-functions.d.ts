@@ -33,6 +33,13 @@ declare function CallbackFilterLine(
 declare function grep(pattern: string | RegExp, invert?: boolean): void;
 
 /**
+ * Joins all lines with a specified separator
+ * @param {string} [separator='\n'] The separator to use between lines
+ * @returns void
+ */
+declare function join(separator?: string): void;
+
+/**
  * Parses the output of the previous action to a json object and gives it to the provided callback
  * @param {CallbackJsonParse} callback The provided callback will be called with the json object parsed from the output of the previous action
  * @param {number} [indentation=2] The indentation that is used to stringify the json object
@@ -205,6 +212,7 @@ declare interface TextwandlerFunctions {
     append: typeof append;
     filterLine: typeof filterLine;
     grep: typeof grep;
+    join: typeof join;
     jsonParse: typeof jsonParse;
     jsonStringify: typeof jsonStringify;
     prepend: typeof prepend;

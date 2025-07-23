@@ -3,6 +3,7 @@ import { ActionAppend } from './actions/action-append';
 import { ActionTransformLine } from './actions/action-transform-line';
 import { ActionFilterLine } from './actions/action-filter-line';
 import { ActionGrep } from './actions/action-grep';
+import { ActionJoin } from './actions/action-join';
 import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
@@ -105,6 +106,9 @@ export class WandlerPipeline {
             ) => {
                 this.addAction(new ActionJsonParse(transformJsonFunction));
                 this.addAction(new ActionJsonStringify(indentation));
+            },
+            join: (separator?: string) => {
+                this.addAction(new ActionJoin(separator));
             },
             jsonStringify: (indentation?: number) =>
                 this.addAction(new ActionJsonStringify(indentation)),
