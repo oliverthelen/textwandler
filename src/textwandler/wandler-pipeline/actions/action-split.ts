@@ -10,8 +10,8 @@ export class ActionSplit extends Action {
     run(input: ActionResult): ActionResult {
         const lines = input.text.split(/\n/);
         const allSplitParts: string[] = [];
-        
-        lines.forEach(line => {
+
+        lines.forEach((line) => {
             const parts = line.split(this.separator);
             allSplitParts.push(...parts);
         });

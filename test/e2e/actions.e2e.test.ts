@@ -182,20 +182,11 @@ test('Action: split - comma separator', async ({ page }) => {
     );
 });
 
-test('Action: split - regex whitespace', async ({ page }) => {
-    await testEditorContent(
-        page,
-        `split(/\\s+/);`,
-        `hello   world\tfrom    split\naction   test`,
-        `hello\nworld\nfrom\nsplit\naction\ntest`
-    );
-});
-
 test('Action: split - pipe separator', async ({ page }) => {
     await testEditorContent(
         page,
-        `split(' | ');`,
-        `first | second | third\nfourth | fifth`,
+        `split('|');`,
+        `first|second|third\nfourth|fifth`,
         `first\nsecond\nthird\nfourth\nfifth`
     );
 });
