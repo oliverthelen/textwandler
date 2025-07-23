@@ -346,7 +346,9 @@ describe('Test of WandlerPipeline', () => {
         const pipeline = new WandlerPipeline();
         pipeline.addAction(new ActionSplit(/\s+/));
 
-        const result = pipeline.run('hello   world\tfrom    split\naction   test');
+        const result = pipeline.run(
+            'hello   world\tfrom    split\naction   test'
+        );
         expect(result).toMatchInlineSnapshot(`
           "hello
           world
