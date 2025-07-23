@@ -108,6 +108,14 @@ declare function setValue(callback: typeof CallbackSetValue): void;
 declare function CallbackSetValue(input: string): string;
 
 /**
+ * Takes a subset of lines from the input, similar to Array.slice()
+ * @param {number} start The index to start the slice from (can be negative)
+ * @param {number} [end] The index to end the slice at (optional)
+ * @returns void
+ */
+declare function slice(start: number, end?: number): void;
+
+/**
  * Sorts all lines using an optional comparator function
  * @param {CallbackSort} [callback] Optional comparator function for custom sorting. If not provided, lines are sorted alphabetically
  * @returns void
@@ -182,6 +190,7 @@ declare interface TextwandlerFunctions {
     reduce: typeof reduce;
     reverse: typeof reverse;
     setValue: typeof setValue;
+    slice: typeof slice;
     sort: typeof sort;
     split: typeof split;
     transformLine: typeof transformLine;

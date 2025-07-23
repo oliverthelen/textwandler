@@ -7,6 +7,7 @@ import { ActionSetValue } from './actions/action-set-value';
 import { ActionReduce } from './actions/action-reduce';
 import { ActionJsonStringify } from './actions/action-json-stringify';
 import { ActionJsonParse } from './actions/action-json-parse';
+import { ActionSlice } from './actions/action-slice';
 import { ActionReverse } from './actions/action-reverse';
 import { ActionSort } from './actions/action-sort';
 import { ActionSplit } from './actions/action-split';
@@ -121,6 +122,9 @@ export class WandlerPipeline {
             },
             setValue: (transformFunction: (input: string) => string) => {
                 this.addAction(new ActionSetValue(transformFunction));
+            },
+            slice: (start: number, end?: number) => {
+                this.addAction(new ActionSlice(start, end));
             },
             sort: (transformFunction?: (a: string, b: string) => number) => {
                 this.addAction(new ActionSort(transformFunction));

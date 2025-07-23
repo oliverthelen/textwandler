@@ -7,6 +7,7 @@ export { ActionJsonStringify } from './action-json-stringify';
 export { ActionReduce } from './action-reduce';
 export { ActionReverse } from './action-reverse';
 export { ActionSetValue } from './action-set-value';
+export { ActionSlice } from './action-slice';
 export { ActionSort } from './action-sort';
 export { ActionSplit } from './action-split';
 export { ActionTransformLine } from './action-transform-line';

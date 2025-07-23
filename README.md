@@ -197,6 +197,25 @@ function setValue((input: string) => string): void
 setValue(() => 'set the output to this string\nnext line');
 ```
 
+### slice
+
+Takes a subset of lines from the input, similar to Array.slice(). Supports negative indices.
+
+```js
+function slice(start: number, end?: number): void
+```
+
+```js
+// Take lines 1-3 (indices 1 and 2)
+slice(1, 3);
+
+// Take from line 2 to the end
+slice(2);
+
+// Take the last 3 lines
+slice(-3);
+```
+
 ### split
 
 Splits each line into multiple lines using a separator. Useful for processing CSV, pipe-delimited, or space-separated data.

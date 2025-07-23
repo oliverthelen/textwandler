@@ -92,6 +92,33 @@ test('Action: unique', async ({ page }) => {
     );
 });
 
+test('Action: slice - with start and end', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `slice(1, 3);`,
+        `line0\nline1\nline2\nline3\nline4`,
+        `line1\nline2`
+    );
+});
+
+test('Action: slice - with only start', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `slice(2);`,
+        `line0\nline1\nline2\nline3\nline4`,
+        `line2\nline3\nline4`
+    );
+});
+
+test('Action: slice - with negative start', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `slice(-2);`,
+        `line0\nline1\nline2\nline3\nline4`,
+        `line3\nline4`
+    );
+});
+
 test('Action: sort - default alphabetical', async ({ page }) => {
     await testEditorContent(
         page,
