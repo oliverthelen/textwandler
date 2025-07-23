@@ -127,7 +127,9 @@ export class WandlerPipeline {
                 replaceValue: string,
                 flags?: string
             ) => {
-                this.addAction(new ActionReplace(searchValue, replaceValue, flags));
+                this.addAction(
+                    new ActionReplace(searchValue, replaceValue, flags)
+                );
             },
             reverse: () => {
                 this.addAction(new ActionReverse());

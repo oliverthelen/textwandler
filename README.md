@@ -157,7 +157,7 @@ replace(/\d+/g, 'NUMBER');
 replace('hello', 'hi', 'gi');
 
 // Replace multiple patterns
-replace(/\s+/g, '_');  // Replace whitespace with underscores
+replace(/\s+/g, '_'); // Replace whitespace with underscores
 ```
 
 ### reverse

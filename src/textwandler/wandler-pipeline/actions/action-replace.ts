@@ -21,9 +21,12 @@ export class ActionReplace extends Action {
             input.text = input.text.replace(regex, this.replaceValue);
         } else {
             // RegExp replacement
-            input.text = input.text.replace(this.searchValue, this.replaceValue);
+            input.text = input.text.replace(
+                this.searchValue,
+                this.replaceValue
+            );
         }
-        
+
         return input;
     }
 
