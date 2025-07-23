@@ -5,6 +5,7 @@ export { ActionGrep } from './action-grep';
 export { ActionJsonParse } from './action-json-parse';
 export { ActionJsonStringify } from './action-json-stringify';
 export { ActionReduce } from './action-reduce';
+export { ActionReverse } from './action-reverse';
 export { ActionSetValue } from './action-set-value';
 export { ActionSort } from './action-sort';
 export { ActionSplit } from './action-split';

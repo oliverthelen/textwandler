@@ -217,3 +217,12 @@ test.skip('Action: trimEnd - right side only', async ({ page }) => {
         `  line1\n\t\tline2\n   line3`
     );
 });
+
+test('Action: reverse', async ({ page }) => {
+    await testEditorContent(
+        page,
+        `reverse();`,
+        `first\nsecond\nthird\nfourth`,
+        `fourth\nthird\nsecond\nfirst`
+    );
+});

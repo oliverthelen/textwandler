@@ -138,6 +138,19 @@ reduce((result, line) => {
 }, 0);
 ```
 
+### reverse
+
+Reverses the order of all lines. The last line becomes the first, and so on.
+
+```js
+function reverse(): void
+```
+
+```js
+// Reverse the order of lines
+reverse();
+```
+
 ### unique
 
 Filters all lines and leaves only unique ones as a result for the next stage
