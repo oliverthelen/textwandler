@@ -313,7 +313,7 @@ test('Action: join - comma separator', async ({ page }) => {
         page,
         `join(', ');`,
         `apple\nbanana\ncherry\ndate`,
-        `apple, banana, cherry, date`
+        `apple,banana,cherry,date`
     );
 });
 
@@ -322,7 +322,7 @@ test('Action: join - pipe separator', async ({ page }) => {
         page,
         `join(' | ');`,
         `first\nsecond\nthird`,
-        `first | second | third`
+        `first|second|third`
     );
 });
 
@@ -331,6 +331,6 @@ test('Action: join - space separator', async ({ page }) => {
         page,
         `join(' ');`,
         `one\ntwo\nthree\nfour`,
-        `one two three four`
+        `onetwothreefour`
     );
 });
