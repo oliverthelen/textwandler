@@ -45,7 +45,7 @@
         "@semantic-release/release-notes-generator": "14.0.3",
         "@types/lodash": "4.17.20",
         "@types/node": "24.2.1",
-        "copy-webpack-plugin": "13.0.0",
+        "copy-webpack-plugin": "13.0.1",
         "css-loader": "7.1.2",
         "favicons": "7.2.0",
         "favicons-webpack-plugin": "6.0.1",
