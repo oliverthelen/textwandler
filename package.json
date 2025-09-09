@@ -32,7 +32,7 @@
         "json5": "2.2.3",
         "lodash": "4.17.21",
         "lucide": "0.542.0",
-        "monaco-editor": "0.52.2"
+        "monaco-editor": "0.53.0"
     },
     "devDependencies": {
         "@commitlint/cli": "19.8.1",
