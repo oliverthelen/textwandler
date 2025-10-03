@@ -31,7 +31,7 @@
     "dependencies": {
         "json5": "2.2.3",
         "lodash": "4.17.21",
-        "lucide": "0.542.0",
+        "lucide": "0.544.0",
         "monaco-editor": "0.53.0"
     },
     "devDependencies": {
