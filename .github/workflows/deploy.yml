@@ -21,7 +21,7 @@ jobs:
               if: "!startsWith(github.event.head_commit.message, 'chore')"
               uses: actions/checkout@v4
               with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.BOT_TOKEN }}
 
             - name: Use Node.js 20.x
               if: "!startsWith(github.event.head_commit.message, 'chore')"
@@ -38,7 +38,7 @@ jobs:
               id: next_version
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: echo "NEXT_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | awk '{print $NF}')" >> $GITHUB_ENV
 
             - name: Update package.json with next version
@@ -53,7 +53,7 @@ jobs:
             - name: Deploy
               if: "!startsWith(github.event.head_commit.message, 'chore')"
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: |
                   git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
                   npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
@@ -62,5 +62,5 @@ jobs:
               if: "!startsWith(github.event.head_commit.message, 'chore')"
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
               run: npx semantic-release
