@@ -47,7 +47,7 @@
         "@types/node": "24.6.2",
         "copy-webpack-plugin": "14.0.0",
         "css-loader": "7.1.4",
-        "favicons": "7.2.0",
+        "favicons": "7.3.1",
         "favicons-webpack-plugin": "6.0.1",
         "gh-pages": "6.3.0",
         "html-webpack-plugin": "5.6.4",
@@ -63,7 +63,7 @@
         "vitest": "4.1.0",
         "webpack": "5.107.2",
         "webpack-cli": "6.0.1",
-        "webpack-dev-server": "5.2.4",
+        "webpack-dev-server": "6.0.0",
         "workbox-webpack-plugin": "7.4.1"
     }
 }
