@@ -94,27 +94,27 @@ export class TextWandler {
 
     // Loads the available functions for the user as ExtraLibs into monaco, so it can provide code completion and hints
     private setupMonaco() {
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(
+        monaco.typescript.javascriptDefaults.addExtraLib(
             APP_ACTION_FUNCTIONS,
             `ts:action-functions.d.ts`
         );
 
         Object.entries(APP_LODASH).forEach(([key, content]) => {
             if (key === 'index') {
-                monaco.languages.typescript.javascriptDefaults.addExtraLib(
+                monaco.typescript.javascriptDefaults.addExtraLib(
                     content,
                     '@types/lodash/index.d.ts'
                 );
             } else {
-                monaco.languages.typescript.javascriptDefaults.addExtraLib(
+                monaco.typescript.javascriptDefaults.addExtraLib(
                     content,
                     `@types/lodash/common/${key}.d.ts`
                 );
             }
         });
 
-        monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
-            target: monaco.languages.typescript.ScriptTarget.ES2015,
+        monaco.typescript.javascriptDefaults.setCompilerOptions({
+            target: monaco.typescript.ScriptTarget.ES2015,
             lib: ['es2015'],
             allowNonTsExtensions: true
         });
