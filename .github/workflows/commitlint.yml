@@ -10,14 +10,14 @@ jobs:
     commitlint:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - uses: wagoid/commitlint-github-action@v6
     prettier:
         name: Prettier Check
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Run Prettier
               id: prettier-run
